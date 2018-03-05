@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <!-- 开发环境下设置 DEBUG 为 true，@remove 注解表示在打包时移除该 <script> 标签。 -->
+    <script @remove>
+        // 不要修改此变量，否则会导致开发环境下运行异常
+        var DEBUG = true;
+    </script>
+    <!--
+        require.js 配置信息，@config 注解表示此节点是一个配置节点，以便构建工具提取配置信息。
+        注意：此 <script> 标签只能用于定义 require 变量，多余的代码将导致构建失败。
+    -->
+    <script @config>
+        var require = {
+            baseUrl: 'src',
+            waitSeconds: 0
+        };
+    </script>
+    <!-- 引入 require.js 并加载主模块 loader/loader -->
+    <script src="src/loader/deps/require.js" data-main="loader/loader"></script>
+</head>
+<body>
+
+</body>
+</html>

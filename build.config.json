@@ -1,0 +1,26 @@
+{
+    // 输入目录(源代码, 相对于本文件所在目录)
+    "in": "./app",
+    // 输出目录
+    "out": "./dist",
+    // 入口文件
+    "entry": "index.html",
+    // 打包前需要移除的文件(夹), 相对于 in 目录
+    "deleteFiles": [],
+    // autoprefixer 浏览器前缀
+    "autoprefixerBrowsers": ["iOS >= 7", "Android >= 4"],
+    // 转换为 DataUri 图片大小限制, 小于此尺寸将会被转换为 DataUri
+    "dataUriLimits": 10000,
+    // 线上环境图片 url 前缀
+    "prodSrcPrefix": "./",
+    // uglifyJS3 配置
+    "uglifyOptions": {},
+    // 文件 hash 长度(默认 7)
+    "hashSize": 7,
+    // 将构建编号作为全局变量(injectBuildId 的值为变量名)保存至 DOM, 留空表示不保存
+    "injectBuildId": "APP_BUILD_ID",
+    // 保存构建编号至指定文件(相对输出目录), 留空表示不保存
+    "saveBuildId": "buildId.txt",
+    // 保存构建信息至指定文件(相对输出目录), 留空表示不保存
+    "saveBuildInfo": "buildInfo.txt"
+}
