@@ -63,9 +63,10 @@ define(function(require, exports, module) {
      * @param {Object} viewParams 视图参数
      * @param {Object} extraData 附加数据
      * @param {String} lockedHash 锁定的 hash
+     * @returns {Boolean} 返回 true 解锁，否则不解锁
      */
     exports.shouldUnlockRouter = function(viewName, viewParams, extraData, lockedHash) {
-
+        return false;
     };
 
     /**
