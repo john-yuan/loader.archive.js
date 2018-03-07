@@ -96,7 +96,7 @@ define(function(require, exports, module) {
     /**
      * 渲染视图接口
      *
-     * 当需要渲染此视图时，系统会调用方法以渲染视图
+     * 当需要渲染此视图时，系统会调用此方法以渲染视图
      *
      * @param {RenderEvent} event 渲染事件对象
      * @returns {void}
