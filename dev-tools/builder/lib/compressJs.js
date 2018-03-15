@@ -12,7 +12,7 @@ const uglifyJS = require("uglify-js");
 
 let runtime = {};
 
-const uglify = function(code) {
+const uglify = function (code) {
     let options = JSON.parse(JSON.stringify(runtime.config.uglifyOptions || {}));
 
     options.compress = options.compress || {};
@@ -37,10 +37,10 @@ const uglify = function(code) {
     }
 };
 
-const compressEjs = function(textContent, filename, name, srcPath) {
+const compressEjs = function (textContent, filename, name, srcPath) {
     let regexp = /\bloader\.template\s*\(\s*require\s*\(\s*(\'|\")(.*?)\1\s*\)\s*\)/g;
 
-    textContent = textContent.replace(regexp, function(match, quote, ejsDep, offset, string) {
+    textContent = textContent.replace(regexp, function (match, quote, ejsDep, offset, string) {
         let ejsPath = ejsDep.substr('loader/deps/text!'.length);
 
         printUtils.childInfo(`编译: ${ejsDep}`);
@@ -87,20 +87,20 @@ const compressEjs = function(textContent, filename, name, srcPath) {
     return textContent;
 };
 
-const handleTextDeps = function(code, filepath, name, srcPath) {
+const handleTextDeps = function (code, filepath, name, srcPath) {
     let deps = ['require', 'exports', 'module'];
     let moduleId = name.replace(/\.js/i, '');
     let cjsRequireRegExp = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g;
     let text = '', textDeps = [];
 
-    code.replace(cjsRequireRegExp, function(match, dep) {
+    code.replace(cjsRequireRegExp, function (match, dep) {
         if (dep.indexOf('loader/deps/text!') === 0) {
             textDeps.push(dep);
         }
         deps.push(dep);
     });
 
-    textDeps.forEach(function(dep) {
+    textDeps.forEach(function (dep) {
         let depText, depId, depPath, pos, prefix, depUrl;
 
         printUtils.childInfo(`合并: ${dep}`);
@@ -124,12 +124,12 @@ const handleTextDeps = function(code, filepath, name, srcPath) {
         }
 
 
-        text += `define('${depId}',[],function(){return ${depText}});\n`;
+        text += `define('${depId}',[],function (){return ${depText}});\n`;
     });
 
     code = code.replace(
         /^\s*?define\s*?\(\s*?function\s*?\(\s*?require\s*?\,\s*?exports\s*?\,\s*?module\s*?\)\s*?\{/,
-        `define('${moduleId}',${JSON.stringify(deps)},function(require,exports,module){`
+        `define('${moduleId}',${JSON.stringify(deps)},function (require,exports,module){`
     );
 
     code = text + code;
@@ -139,7 +139,7 @@ const handleTextDeps = function(code, filepath, name, srcPath) {
     return code;
 };
 
-const compressJs = function(filename, name, srcPath) {
+const compressJs = function (filename, name, srcPath) {
     let textContent;
 
     printUtils.info(`压缩 ${name}`);
@@ -173,13 +173,13 @@ const compressJs = function(filename, name, srcPath) {
     }
 };
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
     runtime.deps = {};
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let srcPath = runtime.srcPath;
         let hasError = false;
-        walkDirSync(srcPath, function(filename) {
+        walkDirSync(srcPath, function (filename) {
             if (!hasError && /\.js$/i.test(filename)) {
                 let name = filename.replace(srcPath, '');
                 name = name.replace(/\\/g, '/');
@@ -191,7 +191,7 @@ module.exports = function(data) {
                     reject(e);
                 }
             }
-        }, function(err) {
+        }, function (err) {
             hasError = true;
             printUtils.error(`遍历文件夹失败! ${srcPath}`);
             reject(err);

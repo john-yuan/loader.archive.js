@@ -5,7 +5,7 @@
  * @module loader/utils/utils
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var hooks = require('runtime/hooks');
 
     /**
@@ -14,7 +14,7 @@ define(function(require, exports, module) {
      * @param {Any} it
      * @returns {String}
      */
-    var type = function(it) {
+    var type = function (it) {
         return Object.prototype.toString.call(it).slice(8, -1).toLowerCase();
     };
 
@@ -23,7 +23,7 @@ define(function(require, exports, module) {
      *
      * @param {String} message 提示信息
      */
-    var info = function(message) {
+    var info = function (message) {
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
             if (hooks.getSettings().logLevel >= 3) {
                 if (typeof message === 'string') {
@@ -40,7 +40,7 @@ define(function(require, exports, module) {
      *
      * @param {String} message 警告信息
      */
-    var warn = function(message) {
+    var warn = function (message) {
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
             if (hooks.getSettings().logLevel >= 2) {
                 if (typeof message === 'string') {
@@ -56,7 +56,7 @@ define(function(require, exports, module) {
      *
      * @param {String} message 错误信息
      */
-    var error = function(message) {
+    var error = function (message) {
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
             if (hooks.getSettings().logLevel >= 1) {
                 if (typeof message === 'string') {

@@ -5,7 +5,7 @@
  * @module loader/core/router
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var hooks = require('runtime/hooks');
     var utils = require('loader/utils/utils');
     var urlParams = require('loader/utils/urlParams');
@@ -23,14 +23,14 @@ define(function(require, exports, module) {
      *
      * @returns {String}
      */
-    var getNormalizedHash = function() {
+    var getNormalizedHash = function () {
         return location.hash.replace(/^#?\/*/, '');
     };
 
     /**
      * 回滚路由
      */
-    var rollback = function() {
+    var rollback = function () {
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
             mCurrentHash && utils.warn('回滚路由。hash=' + mCurrentHash);
         }
@@ -43,7 +43,7 @@ define(function(require, exports, module) {
      *
      * @returns {String}
      */
-    var getViewName = function() {
+    var getViewName = function () {
         var hash = getNormalizedHash();
         var index = hash.indexOf('?');
         return index > -1 ? hash.substr(0, index) : hash;
@@ -52,7 +52,7 @@ define(function(require, exports, module) {
     /**
      * 从 hash 中获取当前视图参数
      */
-    var getViewParams = function() {
+    var getViewParams = function () {
         var index = location.hash.indexOf('?');
         var queryString = index > -1 ? location.hash.substr(index + 1) : '';
         return urlParams.decode(queryString);
@@ -61,7 +61,7 @@ define(function(require, exports, module) {
     /**
      * 锁定路由器
      */
-    var lock = function() {
+    var lock = function () {
         mRouterLocked = true;
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
             utils.warn('路由器已锁定！');
@@ -71,7 +71,7 @@ define(function(require, exports, module) {
     /**
      * 解锁路由器
      */
-    var unlock = function() {
+    var unlock = function () {
         mRouterLocked = false;
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
             utils.warn('路由器已解锁！');
@@ -83,7 +83,7 @@ define(function(require, exports, module) {
      *
      * @param {Function} callback 路由回调
      */
-    var onRoute = function(callback) {
+    var onRoute = function (callback) {
         if (mRoute === null) {
             mRoute = callback;
             if (/\/$/.test(location.pathname + location.search)) {
@@ -102,7 +102,7 @@ define(function(require, exports, module) {
      * @param {Object} [viewParams] 视图参数
      * @param {Object} [extraData] 附加数据
      */
-    var routeTo = function(viewName, viewParams, extraData) {
+    var routeTo = function (viewName, viewParams, extraData) {
         var view, hash;
         // 如果当前视图为空，则跳转至默认视图
         if (!viewName) {
@@ -146,7 +146,7 @@ define(function(require, exports, module) {
     /**
      * 监听浏览器 hashchange 事件
      */
-    var onHashChange = function() {
+    var onHashChange = function () {
         var hash = getNormalizedHash();
         var viewName = getViewName();
         var viewParams = getViewParams();
@@ -196,9 +196,9 @@ define(function(require, exports, module) {
      * @param {Object} viewParams 视图参数
      * @param {Object} extraData 附加数据
      */
-    var route = function(hash, viewName, viewParams, extraData) {
-        intercept('*', hash, viewName, viewParams, extraData, function() {
-            intercept(viewName, hash, viewName, viewParams, extraData, function() {
+    var route = function (hash, viewName, viewParams, extraData) {
+        intercept('*', hash, viewName, viewParams, extraData, function () {
+            intercept(viewName, hash, viewName, viewParams, extraData, function () {
                 mCurrentHash = hash;
                 mRoute(viewName, viewParams, extraData);
                 if (typeof DEBUG !== 'undefined' && DEBUG === true) {
@@ -218,7 +218,7 @@ define(function(require, exports, module) {
      * @param {Object} extraData 附加数据
      * @param {Function} pass 通过回调
      */
-    var intercept = function(name, hash, viewName, viewParams, extraData, pass) {
+    var intercept = function (name, hash, viewName, viewParams, extraData, pass) {
         var expirationId = mExpirationId = mExpirationId + 1;
         var savedInterceptor = mInterceptors[name], interceptorBack;
 
@@ -241,7 +241,7 @@ define(function(require, exports, module) {
                 if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                     utils.warn('拦截器 ' + name + ' 返回异步函数，正执行该函数并等待回调。');
                 }
-                interceptorBack(function(next) {
+                interceptorBack(function (next) {
                     if (expirationId === mExpirationId) {
                         if (next) {
                             if (typeof DEBUG !== 'undefined' && DEBUG === true) {
@@ -293,7 +293,7 @@ define(function(require, exports, module) {
      * @example router.interceptor('home', null); 删除 home 的拦截器
      * @example router.interceptor('home'); 获取 home 的拦截器
      */
-    var interceptor = function(viewName, handler) {
+    var interceptor = function (viewName, handler) {
         if (arguments.length === 1) {
             return mInterceptors[viewName];
         } else if (arguments.length === 2) {

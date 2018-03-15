@@ -4,7 +4,7 @@
  * @param {String} rawJSONText 原始文本
  * @returns {String} 移除注释之后的 JSON
  */
-const cleanJSONText = function(rawJSONText) {
+const cleanJSONText = function (rawJSONText) {
     var type = 0;
     var char = '';
     var index = 0;

@@ -10,9 +10,9 @@ const JSDOM = require('jsdom').JSDOM;
 
 let runtime = {};
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let entry = runtime.config.entry || 'index.html';
         let entryPath = path.resolve(runtime.tempDir, entry);
         let htmlText = '';

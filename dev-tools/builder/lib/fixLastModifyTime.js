@@ -8,9 +8,9 @@ const printUtils = require('./printUtils');
 
 let runtime = {};
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
 
         let paths = runtime.paths || {};
         let srcPath = path.resolve(runtime.out, runtime.rjsConfig.baseUrl || '');

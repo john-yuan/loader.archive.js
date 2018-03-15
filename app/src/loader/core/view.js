@@ -5,7 +5,7 @@
  * @module loader/core/view
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var dom = require('loader/utils/dom');
     var hooks = require('runtime/hooks');
     var document = window.document;
@@ -21,7 +21,7 @@ define(function(require, exports, module) {
      * @param {String} key
      * @param {Any} value
      */
-    var setData = function(viewModule, key, value) {
+    var setData = function (viewModule, key, value) {
         var store = mViewStore[viewModule.id] || {};
         store[key] = value;
         mViewStore[viewModule.id] = store;
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
      * @param {String} key
      * @returns {Any}
      */
-    var getData = function(viewModule, key) {
+    var getData = function (viewModule, key) {
         var store = mViewStore[viewModule.id] || {};
         return store[key];
     };
@@ -44,7 +44,7 @@ define(function(require, exports, module) {
      *
      * @param {Object} viewModule
      */
-    var delData = function(viewModule) {
+    var delData = function (viewModule) {
         delete mViewStore[viewModule.id];
     };
 
@@ -54,7 +54,7 @@ define(function(require, exports, module) {
      * @param {Object} viewModule
      * @returns {String}
      */
-    var getId = function(viewModule) {
+    var getId = function (viewModule) {
         return 'v-' + viewModule.id.split(/\/+/).slice(1, -1).join('-');
     };
 
@@ -63,7 +63,7 @@ define(function(require, exports, module) {
      *
      * @returns {Element}
      */
-    var getViewContainer = function() {
+    var getViewContainer = function () {
         if (!mViewContainer) {
             mViewContainer = hooks.getViewContainer();
             if (!mViewContainer || mViewContainer.nodeType !== 1) {
@@ -78,7 +78,7 @@ define(function(require, exports, module) {
      *
      * @returns {Boolean}
      */
-    var isRendered = function(viewModule) {
+    var isRendered = function (viewModule) {
         return getData(viewModule, 'isRendered');
     };
 
@@ -90,7 +90,7 @@ define(function(require, exports, module) {
      * @param {String|null} htmlText
      * @returns {Element}
      */
-    var render = function(viewModule, cssText, htmlText) {
+    var render = function (viewModule, cssText, htmlText) {
         var id = getId(viewModule), styleNode, rootNode, lastStyleNode;
         // 增加渲染计数器
         mRenderCount += 1;
@@ -146,7 +146,7 @@ define(function(require, exports, module) {
      *
      * @param {Object} viewModule
      */
-    var destroy = function(viewModule) {
+    var destroy = function (viewModule) {
         var rootNode = getData(viewModule, 'rootNode');
         var styleNode = getData(viewModule, 'styleNode');
 
@@ -161,7 +161,7 @@ define(function(require, exports, module) {
      *
      * @param {Object} viewModule
      */
-    var show = function(viewModule) {
+    var show = function (viewModule) {
         var rootNode = getData(viewModule, 'rootNode');
         if (rootNode) {
             dom.addClass(document.documentElement, getId(viewModule) + '-global');
@@ -174,7 +174,7 @@ define(function(require, exports, module) {
      *
      * @param {Object} viewModule
      */
-    var hide = function(viewModule) {
+    var hide = function (viewModule) {
         var rootNode = getData(viewModule, 'rootNode');
         if (rootNode) {
             rootNode.style.display = 'none';
@@ -187,7 +187,7 @@ define(function(require, exports, module) {
      *
      * @returns {Number} 返回 view.render 的执行次数
      */
-    var getRenderCount = function() {
+    var getRenderCount = function () {
         return mRenderCount;
     };
 

@@ -11,7 +11,7 @@ const printUtils = require('./printUtils');
 
 let runtime = {};
 
-const resolveDep = function(mod, dep) {
+const resolveDep = function (mod, dep) {
     if (dep.indexOf('./') === 0 || dep.indexOf('../') === 0) {
         let paths = mod.split('/');
         let child = dep.split('/');
@@ -34,12 +34,12 @@ const resolveDep = function(mod, dep) {
     }
 };
 
-const getDirectDeps = function(moduleId, exclueDeps) {
+const getDirectDeps = function (moduleId, exclueDeps) {
     let deps = [];
 
     exclueDeps = exclueDeps || [];
 
-    (runtime.deps[moduleId] || []).forEach(function(dep) {
+    (runtime.deps[moduleId] || []).forEach(function (dep) {
         if (['require', 'exports', 'module'].indexOf(dep) === -1) {
             if (exclueDeps.indexOf(dep) === -1) {
                 deps.push(resolveDep(moduleId, dep));
@@ -50,16 +50,16 @@ const getDirectDeps = function(moduleId, exclueDeps) {
     return deps;
 };
 
-const getLoaderDeps = function() {
+const getLoaderDeps = function () {
     let index = 0;
     let exclueDeps = ['runtime/hooks'];
     let loaderDeps = getDirectDeps('loader/loader', exclueDeps);
-    let walkDeps = function() {
+    let walkDeps = function () {
         if (index < loaderDeps.length) {
             let dep = loaderDeps[index];
             let deps = getDirectDeps(dep, exclueDeps);
 
-            deps.forEach(function(dep) {
+            deps.forEach(function (dep) {
                 if (loaderDeps.indexOf(dep) === -1) {
                     loaderDeps.push(dep);
                 }
@@ -77,10 +77,10 @@ const getLoaderDeps = function() {
     return loaderDeps;
 };
 
-const getModuleInUse = function() {
+const getModuleInUse = function () {
     let exclueMods = getLoaderDeps();
     let modsInUse = ['loader/deps/require'];
-    let pushMod = function(mod) {
+    let pushMod = function (mod) {
         if (mod.indexOf('loader/deps/text!') !== 0) {
             if (exclueMods.indexOf(mod) === -1) {
                 exclueMods.push(mod);
@@ -96,7 +96,7 @@ const getModuleInUse = function() {
     for (let moduleId in runtime.deps) {
         if (runtime.deps.hasOwnProperty(moduleId)) {
             pushMod(moduleId);
-            (runtime.deps[moduleId] || []).forEach(function(dep) {
+            (runtime.deps[moduleId] || []).forEach(function (dep) {
                 pushMod(resolveDep(moduleId, dep));
             });
         }
@@ -105,12 +105,12 @@ const getModuleInUse = function() {
     return modsInUse;
 };
 
-const bundleLoader = function() {
+const bundleLoader = function () {
     let loaderDeps = getLoaderDeps();
     let bundleContent = [];
 
     loaderDeps.push('loader/loader');
-    loaderDeps.forEach(function(dep) {
+    loaderDeps.forEach(function (dep) {
         let filename = path.resolve(runtime.srcPath, dep + '.js');
         let textContent;
         try {
@@ -120,7 +120,7 @@ const bundleLoader = function() {
             throw e;
         }
         if (/^\s*?define\s*?\(\s*?function\s*?\(/.test(textContent)) {
-            textContent = textContent.replace(/^\s*?define\s*?\(\s*?function\s*?\(/, `define('${dep}',function(`);
+            textContent = textContent.replace(/^\s*?define\s*?\(\s*?function\s*?\(/, `define('${dep}',function (`);
         } else if (/^\s*?define\s*?\(\s*?\[/.test(textContent)) {
             textContent = textContent.replace(/^\s*?define\s*?\(\s*?\[/, `define('${dep}',[`);
         } else if (!/^\s*?define\s*?\(/.test(textContent)) {
@@ -140,8 +140,8 @@ const bundleLoader = function() {
     }
 };
 
-const parsePaths = function() {
-    getModuleInUse().forEach(function(moduleId) {
+const parsePaths = function () {
+    getModuleInUse().forEach(function (moduleId) {
         let filename = path.resolve(runtime.srcPath, moduleId + '.js');
         let textContent;
 
@@ -172,12 +172,12 @@ const parsePaths = function() {
     });
 };
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
     runtime.hash = {};
     runtime.paths = {};
     runtime.fileSize = [];
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let hasError = false;
         try {
             bundleLoader();

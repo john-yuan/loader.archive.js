@@ -8,17 +8,17 @@ const printUtils = require('./printUtils');
 
 let runtime = {};
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let deleteFiles = runtime.config.deleteFiles || [];
-        let deleteFile = function() {
+        let deleteFile = function () {
             if (deleteFiles.length === 0) {
                 resolve(runtime);
             } else {
                 let filename = deleteFiles.pop();
                 let filepath = path.resolve(runtime.tempDir, filename);
-                fse.remove(filepath, function(err) {
+                fse.remove(filepath, function (err) {
                     if (err) {
                         printUtils.error(`删除文件失败! ${filepath}`);
                         reject(err);

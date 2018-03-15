@@ -4,13 +4,13 @@
  * @module runtime/hooks
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     /**
      * 获取配置信息
      *
      * @returns {Object}
      */
-    exports.getSettings = function() {
+    exports.getSettings = function () {
         return {
             /**
              * 系统日志级别
@@ -28,7 +28,7 @@ define(function(require, exports, module) {
      *
      * @returns {String}
      */
-    exports.getBaseCssText = function() {
+    exports.getBaseCssText = function () {
         return [
             require('loader/deps/text!assets/styles/base.less'),
         ].join('\n');
@@ -39,7 +39,7 @@ define(function(require, exports, module) {
      *
      * @param {Function} done
      */
-    exports.init = function(done) {
+    exports.init = function (done) {
         done();
     };
 
@@ -48,7 +48,7 @@ define(function(require, exports, module) {
      *
      * @returns {Object}
      */
-    exports.getDefaultView = function() {
+    exports.getDefaultView = function () {
         return {
             viewName: 'home',
             viewParams: null,
@@ -65,7 +65,7 @@ define(function(require, exports, module) {
      * @param {String} lockedHash 锁定的 hash
      * @returns {Boolean} 返回 true 解锁，否则不解锁
      */
-    exports.shouldUnlockRouter = function(viewName, viewParams, extraData, lockedHash) {
+    exports.shouldUnlockRouter = function (viewName, viewParams, extraData, lockedHash) {
         return false;
     };
 
@@ -77,7 +77,7 @@ define(function(require, exports, module) {
      * @param {Object} viewParams 视图参数
      * @param {Object} extraData 附加数据
      */
-    exports.onLoadViewError = function(expired, viewName, viewParams, extraData) {
+    exports.onLoadViewError = function (expired, viewName, viewParams, extraData) {
 
     };
 
@@ -86,7 +86,7 @@ define(function(require, exports, module) {
      *
      * @param {String} viewName 视图名称
      */
-    exports.beforeLoadingView = function(viewName) {
+    exports.beforeLoadingView = function (viewName) {
 
     };
 
@@ -95,7 +95,7 @@ define(function(require, exports, module) {
      *
      * @param {String} viewName 视图名称
      */
-    exports.afterLoadingView = function(viewName) {
+    exports.afterLoadingView = function (viewName) {
 
     };
 
@@ -105,7 +105,7 @@ define(function(require, exports, module) {
      *
      * @param {ParamChangeEvent} event 视图参数改变事件对象
      */
-    exports.beforeViewParamChange = function(event) {
+    exports.beforeViewParamChange = function (event) {
 
     };
 
@@ -114,7 +114,7 @@ define(function(require, exports, module) {
      *
      * @param {ParamChangeEvent} event 视图参数改变事件对象
      */
-    exports.afterViewParamChange = function(event) {
+    exports.afterViewParamChange = function (event) {
 
     };
 
@@ -123,7 +123,7 @@ define(function(require, exports, module) {
      *
      * @param {DestroyEvent} event 视图销毁事件对象
      */
-    exports.beforeDestroyView = function(event) {
+    exports.beforeDestroyView = function (event) {
 
     };
 
@@ -132,7 +132,7 @@ define(function(require, exports, module) {
      *
      * @param {DestroyEvent} event 视图销毁事件对象
      */
-    exports.afterDestroyView = function(event) {
+    exports.afterDestroyView = function (event) {
 
     };
 
@@ -141,7 +141,7 @@ define(function(require, exports, module) {
      *
      * @param {RenderEvent} event 视图渲染事件对象
      */
-    exports.beforeRenderView = function(event) {
+    exports.beforeRenderView = function (event) {
 
     };
 
@@ -150,7 +150,7 @@ define(function(require, exports, module) {
      *
      * @param {RenderEvent} event 视图渲染事件对象
      */
-    exports.afterRenderView = function(event) {
+    exports.afterRenderView = function (event) {
 
     };
 
@@ -159,7 +159,7 @@ define(function(require, exports, module) {
      *
      * @returns {HTMLElement|Void} 如果不返回则默认使用 document.body
      */
-    exports.getViewContainer = function() {
+    exports.getViewContainer = function () {
 
     };
 
@@ -168,7 +168,7 @@ define(function(require, exports, module) {
      *
      * @returns {HTMLElement|Void} 如果不返回则默认使用 document.body
      */
-    exports.getWidgetContainer = function() {
+    exports.getWidgetContainer = function () {
 
     };
 });

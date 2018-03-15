@@ -8,7 +8,7 @@ const mime = require('mime');
  * @returns {String}
  * @throws {Error}
  */
-const imageDataUri = function(imagePath) {
+const imageDataUri = function (imagePath) {
     let mimetype = mime.lookup(imagePath);
     let image = fs.readFileSync(imagePath);
     let dataUrl = 'data:' + (mimetype ? (mimetype + ';') : '') + 'base64,';

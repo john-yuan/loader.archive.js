@@ -5,14 +5,14 @@
  * @module loader/utils/urlParams
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     /**
      * 将简单数据对象编码为查询字符串
      *
      * @param {Object} data 简单数据对象(可包含的类型有 number, boolean, string)
      * @returns {String} 查询字符串
      */
-    var encode = function(data) {
+    var encode = function (data) {
         var type, prop, key, val, queryString = [];
         var hasOwn = Object.prototype.hasOwnProperty;
         var toString = Object.prototype.toString;
@@ -54,7 +54,7 @@ define(function(require, exports, module) {
      * @param {String} queryString 查询字符串
      * @returns {Object}
      */
-    var decode = function(queryString) {
+    var decode = function (queryString) {
         var i, pair, data = {}, pairs = ('' + queryString).split('&');
 
         for (i = 0; i < pairs.length; i += 1) {

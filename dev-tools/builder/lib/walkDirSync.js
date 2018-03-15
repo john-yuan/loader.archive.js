@@ -8,7 +8,7 @@ const path = require('path');
  * @param {Function} [onFile] 文件处理回调
  * @param {Function} [onError] 错误处理回调
  */
-const walkDirSync = function(dir, onFile, onError) {
+const walkDirSync = function (dir, onFile, onError) {
     var fileList;
     try {
         fileList = fs.readdirSync(dir);
@@ -16,7 +16,7 @@ const walkDirSync = function(dir, onFile, onError) {
         onError && onError(err);
     }
     if (fileList) {
-        fileList.forEach(function(filename) {
+        fileList.forEach(function (filename) {
             var stat, filepath = path.resolve(dir, filename);
             try {
                 stat = fs.statSync(filepath);

@@ -7,10 +7,10 @@ const printUtils = require('./printUtils');
 
 let runtime = {};
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
-        fse.copy(runtime.in, runtime.tempDir, function(err) {
+    return new Promise(function (resolve, reject) {
+        fse.copy(runtime.in, runtime.tempDir, function (err) {
             if (err) {
                 printUtils.error('复制源代码失败!');
                 reject(err);

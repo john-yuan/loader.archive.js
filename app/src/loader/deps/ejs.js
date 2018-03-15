@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ejs = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ejs = f()}})(function (){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function (e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function (require,module,exports){
 /*
  * EJS Embedded JavaScript templates
  * Copyright 2112 Matthew Eernisse (mde@fleegix.org)
@@ -103,7 +103,7 @@ exports.localsName = _DEFAULT_LOCALS_NAME;
  * @param {Boolean} isDir    parent file path whether is directory
  * @return {String}
  */
-exports.resolveInclude = function(name, filename, isDir) {
+exports.resolveInclude = function (name, filename, isDir) {
   var dirname = path.dirname;
   var extname = path.extname;
   var resolve = path.resolve;
@@ -547,7 +547,7 @@ Template.prototype = {
     }
 
     try {
-      fn = new Function(opts.localsName + ', escapeFn, include, rethrow', src);
+      fn = new function (opts.localsName + ', escapeFn, include, rethrow', src);
     }
     catch(e) {
       // istanbul ignore else
@@ -630,7 +630,7 @@ Template.prototype = {
             includeObj = includeSource(include[1], includeOpts);
             if (self.opts.compileDebug) {
               includeSrc =
-                  '    ; (function(){' + '\n'
+                  '    ; (function (){' + '\n'
                   + '      var __line = 1' + '\n'
                   + '      , __lines = ' + JSON.stringify(includeObj.template) + '\n'
                   + '      , __filename = ' + JSON.stringify(includeObj.filename) + ';' + '\n'
@@ -641,7 +641,7 @@ Template.prototype = {
                   + '      }' + '\n'
                   + '    ; }).call(this)' + '\n';
             }else{
-              includeSrc = '    ; (function(){' + '\n' + includeObj.source +
+              includeSrc = '    ; (function (){' + '\n' + includeObj.source +
                   '    ; }).call(this)' + '\n';
             }
             self.source += includeSrc;
@@ -866,7 +866,7 @@ if (typeof window != 'undefined') {
   window.ejs = exports;
 }
 
-},{"../package.json":6,"./utils":2,"fs":3,"path":4}],2:[function(require,module,exports){
+},{"../package.json":6,"./utils":2,"fs":3,"path":4}],2:[function (require,module,exports){
 /*
  * EJS Embedded JavaScript templates
  * Copyright 2112 Matthew Eernisse (mde@fleegix.org)
@@ -1032,9 +1032,9 @@ exports.cache = {
   }
 };
 
-},{}],3:[function(require,module,exports){
+},{}],3:[function (require,module,exports){
 
-},{}],4:[function(require,module,exports){
+},{}],4:[function (require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1091,13 +1091,13 @@ function normalizeArray(parts, allowAboveRoot) {
 // 'root' is just a slash, or nothing.
 var splitPathRe =
     /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-var splitPath = function(filename) {
+var splitPath = function (filename) {
   return splitPathRe.exec(filename).slice(1);
 };
 
 // path.resolve([from ...], to)
 // posix version
-exports.resolve = function() {
+exports.resolve = function () {
   var resolvedPath = '',
       resolvedAbsolute = false;
 
@@ -1119,7 +1119,7 @@ exports.resolve = function() {
   // handle relative paths to be safe (might happen when process.cwd() fails)
 
   // Normalize the path
-  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function (p) {
     return !!p;
   }), !resolvedAbsolute).join('/');
 
@@ -1128,12 +1128,12 @@ exports.resolve = function() {
 
 // path.normalize(path)
 // posix version
-exports.normalize = function(path) {
+exports.normalize = function (path) {
   var isAbsolute = exports.isAbsolute(path),
       trailingSlash = substr(path, -1) === '/';
 
   // Normalize the path
-  path = normalizeArray(filter(path.split('/'), function(p) {
+  path = normalizeArray(filter(path.split('/'), function (p) {
     return !!p;
   }), !isAbsolute).join('/');
 
@@ -1148,14 +1148,14 @@ exports.normalize = function(path) {
 };
 
 // posix version
-exports.isAbsolute = function(path) {
+exports.isAbsolute = function (path) {
   return path.charAt(0) === '/';
 };
 
 // posix version
-exports.join = function() {
+exports.join = function () {
   var paths = Array.prototype.slice.call(arguments, 0);
-  return exports.normalize(filter(paths, function(p, index) {
+  return exports.normalize(filter(paths, function (p, index) {
     if (typeof p !== 'string') {
       throw new TypeError('Arguments to path.join must be strings');
     }
@@ -1166,7 +1166,7 @@ exports.join = function() {
 
 // path.relative(from, to)
 // posix version
-exports.relative = function(from, to) {
+exports.relative = function (from, to) {
   from = exports.resolve(from).substr(1);
   to = exports.resolve(to).substr(1);
 
@@ -1210,7 +1210,7 @@ exports.relative = function(from, to) {
 exports.sep = '/';
 exports.delimiter = ':';
 
-exports.dirname = function(path) {
+exports.dirname = function (path) {
   var result = splitPath(path),
       root = result[0],
       dir = result[1];
@@ -1229,7 +1229,7 @@ exports.dirname = function(path) {
 };
 
 
-exports.basename = function(path, ext) {
+exports.basename = function (path, ext) {
   var f = splitPath(path)[2];
   // TODO: make this comparison case-insensitive on windows?
   if (ext && f.substr(-1 * ext.length) === ext) {
@@ -1239,7 +1239,7 @@ exports.basename = function(path, ext) {
 };
 
 
-exports.extname = function(path) {
+exports.extname = function (path) {
   return splitPath(path)[3];
 };
 
@@ -1262,7 +1262,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":5}],5:[function(require,module,exports){
+},{"_process":5}],5:[function (require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -1442,9 +1442,9 @@ process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
-process.umask = function() { return 0; };
+process.umask = function () { return 0; };
 
-},{}],6:[function(require,module,exports){
+},{}],6:[function (require,module,exports){
 module.exports={
   "name": "ejs",
   "description": "Embedded JavaScript templates",

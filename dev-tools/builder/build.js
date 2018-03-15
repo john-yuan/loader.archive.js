@@ -130,8 +130,8 @@ Promise.resolve(runtime)
     .then(require('./lib/copyBuildCode'))
     .then(require('./lib/fixLastModifyTime'))
     .then(require('./lib/printBuildInfo'))
-    .catch(function(error) {
-        fse.remove(runtime.tempDir, function(err) {
+    .catch(function (error) {
+        fse.remove(runtime.tempDir, function (err) {
             if (err) {
                 printUtils.error(`删除临时目录失败! 请手动删除 ${runtime.tempDir}`, err);
             }

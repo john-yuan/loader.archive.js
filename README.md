@@ -89,7 +89,7 @@ views/test/test.tpl     视图test的HTML文件
 /**
  * test 视图模块
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     // 引入加载器模块
     var loader = require('loader/loader');
 
@@ -101,7 +101,7 @@ define(function(require, exports, module) {
      * @param {RenderEvent} event 渲染事件对象
      * @returns {void}
      */
-    exports.render = function(event) {
+    exports.render = function (event) {
         // 引入视图样式文件
         var cssText = require('loader/deps/text!./test.less');
         // 引入视图HTML文件
@@ -120,7 +120,7 @@ define(function(require, exports, module) {
      * @param {DestroyEvent} event 销毁事件对象
      * @returns {void}
      */
-    exports.destroy = function(event) {
+    exports.destroy = function (event) {
         // 调用 loader.view.destroy API 销毁视图
         loader.view.destroy(module);
         console.log(event);
@@ -134,7 +134,7 @@ define(function(require, exports, module) {
      * @param {ParamChangeEvent} event 参数改变事件
      * @returns {void}
      */
-    exports.onParamChange = function(event) {
+    exports.onParamChange = function (event) {
         console.log(event);
     };
 });

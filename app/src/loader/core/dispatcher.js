@@ -5,7 +5,7 @@
  * @module loader/core/dispatcher
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var dom = require('loader/utils/dom');
     var hooks = require('runtime/hooks');
     var utils = require('loader/utils/utils');
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
      * @param {Object} viewParams
      * @param {Object} extraData
      */
-    var RenderEvent = function(targetView, prevView, viewParams, extraData) {
+    var RenderEvent = function (targetView, prevView, viewParams, extraData) {
         this.targetView = targetView;
         this.prevView = prevView;
         this.viewParams = viewParams;
@@ -49,7 +49,7 @@ define(function(require, exports, module) {
      * @param {Object} targetView
      * @param {Object} nextView
      */
-    var DestroyEvent = function(targetView, nextView) {
+    var DestroyEvent = function (targetView, nextView) {
         this.targetView = targetView;
         this.nextView = nextView;
         this.session = {};
@@ -63,7 +63,7 @@ define(function(require, exports, module) {
      * @param {Object} viewParams
      * @param {Object} prevParams
      */
-    var ParamChangeEvent = function(targetView, viewParams, prevParams) {
+    var ParamChangeEvent = function (targetView, viewParams, prevParams) {
         this.targetView = targetView;
         this.viewParams = viewParams;
         this.prevParams = prevParams;
@@ -73,7 +73,7 @@ define(function(require, exports, module) {
     /**
      * 结束加载视图
      */
-    var endLoadingView = function() {
+    var endLoadingView = function () {
         if (mLoadingViewName) {
             hooks.afterLoadingView(mLoadingViewName);
             mLoadingViewName = null;
@@ -85,7 +85,7 @@ define(function(require, exports, module) {
      *
      * @param {String} viewName 视图名称
      */
-    var startLoadingView = function(viewName) {
+    var startLoadingView = function (viewName) {
         mLoadingViewName = viewName;
         hooks.beforeLoadingView(viewName);
     };
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
      * @param {Object} viewParams 视图参数
      * @param {Object} extraData 附加数据
      */
-    var dispatch = function(viewName, viewParams, extraData) {
+    var dispatch = function (viewName, viewParams, extraData) {
         var dispatchId = (mDispatchId = mDispatchId + 1);
         var targetView = mLoadedViews[viewName];
 
@@ -107,7 +107,7 @@ define(function(require, exports, module) {
             renderView(targetView, viewParams, extraData);
         } else {
             startLoadingView(viewName);
-            loadView(viewName, function(targetView) {
+            loadView(viewName, function (targetView) {
                 if (mDispatchId === dispatchId) {
                     renderView(targetView, viewParams, extraData);
                 } else {
@@ -115,7 +115,7 @@ define(function(require, exports, module) {
                         utils.info('视图 ' + viewName + ' 加载完成，但是渲染会话过期。');
                     }
                 }
-            }, function() {
+            }, function () {
                 if (dispatchId === mDispatchId) {
                     if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                         utils.error('加载视图 ' + viewName + ' 失败。');
@@ -139,16 +139,16 @@ define(function(require, exports, module) {
      * @param {Function} onSuccess 加载成功回调
      * @param {Function} onError 加载失败回调
      */
-    var loadView = function(viewName, onSuccess, onError) {
+    var loadView = function (viewName, onSuccess, onError) {
         var id = ['views', viewName, viewName.replace(/[\s\S]+\//, '')].join('/');
         // 异步加载视图
-        requirejs([id], function(exports) {
+        requirejs([id], function (exports) {
             var view = { viewName: viewName, exports: exports, renderCount: 0 };
             // 保存视图
             mLoadedViews[viewName] = view;
             // 执行回调
             onSuccess(view);
-        }, function(err) {
+        }, function (err) {
             if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                 utils.error(err.stack);
             }
@@ -163,7 +163,7 @@ define(function(require, exports, module) {
      * @param {Object} viewParams 视图参数
      * @param {Object} extraData 附加数据
      */
-    var renderView = function(targetView, viewParams, extraData) {
+    var renderView = function (targetView, viewParams, extraData) {
         var renderEvent, destroyEvent, paramChangeEvent;
 
         if (targetView === mCurrentView) {
@@ -234,7 +234,7 @@ define(function(require, exports, module) {
      *
      * @param {Function} callback
      */
-    var onceBeforeDestroyView = function(callback) {
+    var onceBeforeDestroyView = function (callback) {
         mOnceBeforeDestroyViewCbs.add(callback);
     };
 
@@ -243,7 +243,7 @@ define(function(require, exports, module) {
      *
      * @param {Function} callback
      */
-    var onBeforeDestroyView = function(callback) {
+    var onBeforeDestroyView = function (callback) {
         mOnBeforeDestroyViewCbs.add(callback);
     };
 
@@ -252,7 +252,7 @@ define(function(require, exports, module) {
      *
      * @param {Function} callback
      */
-    var onceViewDestroyed = function() {
+    var onceViewDestroyed = function () {
         mOnceViewDestroyedCbs.add(callback);
     };
 
@@ -261,16 +261,16 @@ define(function(require, exports, module) {
      *
      * @param {Function} callback
      */
-    var onViewDestroyed = function(callback) {
+    var onViewDestroyed = function (callback) {
         mOnViewDestroyedCbs.add(callback);
     };
 
     /**
      * 初始化
      */
-    var initialize = function() {
+    var initialize = function () {
         mOnceBeforeDestroyViewCbs = new Callbacks();
-        mOnceBeforeDestroyViewCbs.onError(function(err) {
+        mOnceBeforeDestroyViewCbs.onError(function (err) {
             if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                 utils.error('执行 onceBeforeDestroyView 回调失败!');
                 console.error(err.stack);
@@ -278,7 +278,7 @@ define(function(require, exports, module) {
         });
 
         mOnBeforeDestroyViewCbs = new Callbacks();
-        mOnBeforeDestroyViewCbs.onError(function(err) {
+        mOnBeforeDestroyViewCbs.onError(function (err) {
             if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                 utils.error('执行 onBeforeDestroyView 回调失败!');
                 console.error(err.stack);
@@ -286,7 +286,7 @@ define(function(require, exports, module) {
         });
 
         mOnceViewDestroyedCbs = new Callbacks();
-        mOnceViewDestroyedCbs.onError(function(err) {
+        mOnceViewDestroyedCbs.onError(function (err) {
             if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                 utils.error('执行 onceViewDestroyed 回调失败!');
                 console.error(err.stack);
@@ -294,7 +294,7 @@ define(function(require, exports, module) {
         });
 
         mOnViewDestroyedCbs = new Callbacks();
-        mOnViewDestroyedCbs.onError(function(err) {
+        mOnViewDestroyedCbs.onError(function (err) {
             if (typeof DEBUG !== 'undefined' && DEBUG === true) {
                 utils.error('执行 onViewDestroyed 回调失败!');
                 console.error(err.stack);
@@ -305,11 +305,11 @@ define(function(require, exports, module) {
     /**
      * 执行路由器
      */
-    var launch = function() {
+    var launch = function () {
         if (mLaunched === false) {
             mLaunched = true;
             initialize();
-            domReady(function() {
+            domReady(function () {
                 var baseStyleNode = dom.createStyleNode(hooks.getBaseCssText() || '', 'style-base');
                 // 注入基础样式
                 if (document.head.firstChild) {
@@ -320,7 +320,7 @@ define(function(require, exports, module) {
                 // 注册路由回调
                 router.onRoute(dispatch);
                 // 初始化并渲染第一个视图
-                hooks.init(function() {
+                hooks.init(function () {
                     router.routeTo(router.getViewName(), router.getViewParams());
                 });
             });

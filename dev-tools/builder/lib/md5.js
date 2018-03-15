@@ -5,7 +5,7 @@ const crypto = require('crypto');
  *
  * @param {String} text
  */
-const md5 = function(text) {
+const md5 = function (text) {
     var hash = crypto.createHash('md5');
     hash.update(text || '');
     return hash.digest('hex');

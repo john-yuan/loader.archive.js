@@ -5,7 +5,7 @@
  * @module loader/loader
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     window.loader = exports;
 
     exports.dispatcher = require('./core/dispatcher');

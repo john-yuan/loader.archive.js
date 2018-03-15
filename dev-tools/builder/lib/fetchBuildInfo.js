@@ -10,10 +10,10 @@ const printUtils = require('./printUtils');
 
 let runtime = {};
 
-const renderTable = function(layout, data) {
+const renderTable = function (layout, data) {
     let maxLength = {};
     let tableText = [];
-    let addSpaces = function(text, length, before) {
+    let addSpaces = function (text, length, before) {
         let num = length - text.length;
         let spaces = Array(num + 1).join(' ');
         if (before) {
@@ -23,16 +23,16 @@ const renderTable = function(layout, data) {
         }
         return text;
     };
-    data.forEach(function(item) {
-        layout.forEach(function(info) {
+    data.forEach(function (item) {
+        layout.forEach(function (info) {
             let name = info.name;
             let text = item[name];
             maxLength[name] = Math.max(maxLength[name] || 0, text.length);
         });
     });
-    data.forEach(function(item) {
+    data.forEach(function (item) {
         let rowText = [];
-        layout.forEach(function(info) {
+        layout.forEach(function (info) {
             let name = info.name;
             let text = item[name];
             rowText.push(addSpaces(text, maxLength[name] || 0, info.alignRight));
@@ -42,14 +42,14 @@ const renderTable = function(layout, data) {
     return tableText.join('\n');
 };
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
-        let fileSize = runtime.fileSize.sort(function(a, b) {
+    return new Promise(function (resolve, reject) {
+        let fileSize = runtime.fileSize.sort(function (a, b) {
             return a.size - b.size;
         });
 
-        fileSize.forEach(function(item, index) {
+        fileSize.forEach(function (item, index) {
             let sizeInfo = filesize(item.size, {
                 output: 'object'
             });

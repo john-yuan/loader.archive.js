@@ -16,7 +16,7 @@ const walkDirSync = require('./walkDirSync');
 
 let runtime = {};
 
-const compressCss = function(mixin, filename, name) {
+const compressCss = function (mixin, filename, name) {
     let cssText;
 
     printUtils.info(`编译 ${name}`);
@@ -38,7 +38,7 @@ const compressCss = function(mixin, filename, name) {
     cssText = mixin + '\n' + cssText;
 
     // 编译 LESS
-    less.render(cssText, function(err, res) {
+    less.render(cssText, function (err, res) {
         if (err) {
             printUtils.error(`编译 LESS 失败! ${name}`);
             throw err;
@@ -70,7 +70,7 @@ const compressCss = function(mixin, filename, name) {
     let dataUriLimits = runtime.config.dataUriLimits || 0;
     let prodSrcPrefix = runtime.config.prodSrcPrefix || "";
 
-    cssText = cssText.replace(/\:\s*url\((['"])?(.*?)\1\)/ig, function(match, qoute, url, offset, string) {
+    cssText = cssText.replace(/\:\s*url\((['"])?(.*?)\1\)/ig, function (match, qoute, url, offset, string) {
         if (/(^\/\/|\:\/\/)/.test(url)) {
             // printUtils.warn(`网络图片 ${url}`);
             return match;
@@ -131,9 +131,9 @@ const compressCss = function(mixin, filename, name) {
     }
 };
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let srcPath = runtime.srcPath;
         let hasError = false;
         let mixin, mixinPath = 'runtime/mixin.less';
@@ -147,7 +147,7 @@ module.exports = function(data) {
             return;
         }
 
-        walkDirSync(srcPath, function(filename) {
+        walkDirSync(srcPath, function (filename) {
             if (!hasError && /\.(css|less)$/i.test(filename)) {
                 let name = filename.replace(srcPath, '');
                 name = name.replace(/\\/g, '/');
@@ -161,7 +161,7 @@ module.exports = function(data) {
                     reject(e);
                 }
             }
-        }, function(err) {
+        }, function (err) {
             hasError = true;
             printUtils.error(`遍历文件夹失败! ${srcPath}`);
             reject(err);

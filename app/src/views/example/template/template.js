@@ -4,11 +4,11 @@
  * @author John Yuan
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var $ = require('libs/zepto');
     var loader = require('loader/loader');
 
-    exports.render = function(event) {
+    exports.render = function (event) {
         var cssText = require('loader/deps/text!./template.less');
         var htmlText = require('loader/deps/text!./template.tpl');
         var rootElement = loader.view.render(module, cssText, htmlText);
@@ -23,7 +23,7 @@ define(function(require, exports, module) {
         var renderedText = template({
             projectName: 'rs',
             projectGithub: 'https://github.com/john-yuan/rs',
-            getViewName: function() {
+            getViewName: function () {
                 return event.targetView.viewName;
             }
         });
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
         $(rootElement).find('.user-info').html(renderedText);
     };
 
-    exports.destroy = function(event) {
+    exports.destroy = function (event) {
         loader.view.destroy(module);
     };
 });

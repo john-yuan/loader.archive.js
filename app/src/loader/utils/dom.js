@@ -5,7 +5,7 @@
  * @module loader/utils/dom
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var utils = require('loader/utils/utils');
     var document = window.document;
 
@@ -19,16 +19,16 @@ define(function(require, exports, module) {
      * @param {String} [styleClassName] <style> 标签的 className
      * @returns {<style>}
      */
-    var createStyleNode = function(cssText, styleId, styleClassName) {
+    var createStyleNode = function (cssText, styleId, styleClassName) {
         var styleNode = document.createElement('style');
 
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
-            (function() {
+            (function () {
                 var start = Date.now(), timeUsed;
                 var less = require('loader/deps/less');
                 var mixin = require('loader/deps/text!runtime/mixin.less');
                 // 处理 less
-                less.render(mixin + '\n' + cssText, function(err, res) {
+                less.render(mixin + '\n' + cssText, function (err, res) {
                     if (err) {
                         utils.error('处理 less 脚本失败!');
                         throw err;
@@ -63,7 +63,7 @@ define(function(require, exports, module) {
      * @param {String} htmlText
      * @returns {Element}
      */
-    var createDOM = function(htmlText) {
+    var createDOM = function (htmlText) {
         var childNodes, length, div = document.createElement('div');
         // 插入html
         div.innerHTML = htmlText;
@@ -72,7 +72,7 @@ define(function(require, exports, module) {
         length = childNodes.length;
         // 只有在开发环境才抛出错误
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
-            return (function() {
+            return (function () {
                 // 找出所有元素节点
                 var nodes = [];
                 while(length--) {
@@ -106,7 +106,7 @@ define(function(require, exports, module) {
      * @param {String} name
      * @returns {Boolean} 有则返回 true, 否则返回 false
      */
-    var hasClass = function(node, name) {
+    var hasClass = function (node, name) {
         var classNames, i, length;
         if (node.className && name) {
             classNames = node.className.split(/\s+/);
@@ -126,7 +126,7 @@ define(function(require, exports, module) {
      * @param {Element} node
      * @param {String} name
      */
-    var addClass = function(node, name) {
+    var addClass = function (node, name) {
         if (!hasClass(node, name)) {
             node.className = node.className ? (node.className + ' ' + name) : name;
         }
@@ -138,7 +138,7 @@ define(function(require, exports, module) {
      * @param {Element} node
      * @param {String} name
      */
-    var removeClass = function(node, name) {
+    var removeClass = function (node, name) {
         var classNames, newClassNames, i, length;
         if (node.className && name) {
             classNames = node.className.split(/\s+/);

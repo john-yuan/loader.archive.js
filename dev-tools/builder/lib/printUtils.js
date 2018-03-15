@@ -5,7 +5,7 @@ const colors = require('colors');
  *
  * @param {String} message
  */
-const info = function(message) {
+const info = function (message) {
     console.info(colors.green('[提示] ' + message));
 };
 
@@ -14,7 +14,7 @@ const info = function(message) {
  *
  * @param {String} message
  */
-const childInfo = function(message) {
+const childInfo = function (message) {
     console.info(colors.gray('[提示]  └─ ' + message));
 };
 
@@ -23,7 +23,7 @@ const childInfo = function(message) {
  *
  * @param {String} message
  */
-const warn = function(message) {
+const warn = function (message) {
     console.warn(colors.yellow('[警告] ' + message));
 };
 
@@ -33,7 +33,7 @@ const warn = function(message) {
  * @param {String} message
  * @param {Error} [error]
  */
-const error = function(message, error) {
+const error = function (message, error) {
     console.error(colors.red('[错误] ' + message));
     if (error) {
         error.stack && console.error(colors.red(error.stack));

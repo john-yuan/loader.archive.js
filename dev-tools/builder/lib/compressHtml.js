@@ -16,7 +16,7 @@ const postcss = require("postcss");
 let runtime = {};
 let dom, window, document;
 
-const uglify = function(code) {
+const uglify = function (code) {
     let options = JSON.parse(JSON.stringify(runtime.config.uglifyOptions || {}));
 
     options.compress = options.compress || {};
@@ -41,7 +41,7 @@ const uglify = function(code) {
     }
 };
 
-const compressHtml = function(filepath, filename) {
+const compressHtml = function (filepath, filename) {
     let htmlText;
 
     printUtils.info(`压缩 ${filename}`);
@@ -92,7 +92,7 @@ const compressHtml = function(filepath, filename) {
     }
 };
 
-const addGlobalDefs = function() {
+const addGlobalDefs = function () {
     let options = JSON.parse(JSON.stringify(runtime.config.uglifyOptions || {}));
 
     options.compress = options.compress || {};
@@ -137,10 +137,10 @@ const addGlobalDefs = function() {
     }
 };
 
-const compressScript = function() {
+const compressScript = function () {
     let scripts = [].slice.call(document.getElementsByTagName('script') || []);
 
-    scripts.forEach(function(script) {
+    scripts.forEach(function (script) {
         if (script.hasAttribute('@remove')) {
             script.parentNode.removeChild(script);
         } else {
@@ -159,10 +159,10 @@ const compressScript = function() {
     });
 };
 
-const compressStyle = function() {
+const compressStyle = function () {
     let styles = [].slice.call(document.getElementsByTagName('style') || []);
 
-    styles.forEach(function(style) {
+    styles.forEach(function (style) {
         if (style.hasAttribute('@remove')) {
             style.parentNode.removeChild(style);
         } else {
@@ -190,9 +190,9 @@ const compressStyle = function() {
     });
 };
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let succeed = true;
         let dir = [];
         try {
@@ -206,7 +206,7 @@ module.exports = function(data) {
             let htmlFileList = [];
             let htmlFileInfo = [];
 
-            dir.forEach(function(filename) {
+            dir.forEach(function (filename) {
                 let stat, filepath = path.resolve(runtime.tempDir, filename);
 
                 if (succeed && /\.html?$/i.test(filename)) {
@@ -238,7 +238,7 @@ module.exports = function(data) {
                 });
             }
 
-            htmlFileInfo.forEach(function(info) {
+            htmlFileInfo.forEach(function (info) {
                 try {
                     compressHtml(info.filepath, info.filename);
                 } catch(e) {

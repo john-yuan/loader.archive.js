@@ -5,7 +5,7 @@
  * @module loader/core/widget
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     var dom = require('loader/utils/dom');
     var hooks = require('runtime/hooks');
     var document = window.document;
@@ -17,7 +17,7 @@ define(function(require, exports, module) {
      *
      * @returns {Element}
      */
-    var getWidgetContainer = function() {
+    var getWidgetContainer = function () {
         if (!mWidgetContainer) {
             mWidgetContainer = hooks.getWidgetContainer();
             if (!mWidgetContainer || mWidgetContainer.nodeType !== 1) {
@@ -33,7 +33,7 @@ define(function(require, exports, module) {
      * @param {Object} widgetModule
      * @returns {String}
      */
-    var getId = function(widgetModule) {
+    var getId = function (widgetModule) {
         return 'w-' + widgetModule.id.split(/\/+/).slice(1, -1).join('-');
     };
 
@@ -45,7 +45,7 @@ define(function(require, exports, module) {
      * @param {String|null} htmlText
      * @returns {Element|undefined} 如果指定了 htmlText 则返回根节点，否则返回 undefined
      */
-    var append = function(widgetModule, cssText, htmlText) {
+    var append = function (widgetModule, cssText, htmlText) {
         var id = getId(widgetModule), lastStyleNode, styleNode, rootNode;
         if (cssText) {
             styleNode = dom.createStyleNode(cssText, 'style-' + id, 'style-widget');
@@ -81,7 +81,7 @@ define(function(require, exports, module) {
      *
      * @param {Object} widgetModule
      */
-    var remove = function(widgetModule) {
+    var remove = function (widgetModule) {
         var id = getId(widgetModule), styleNode, rootNode;
         styleNode = document.getElementById('style-' + id);
         rootNode = document.getElementById(id);

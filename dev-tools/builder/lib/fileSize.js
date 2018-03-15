@@ -6,7 +6,7 @@ const fs = require('fs');
  * @param {String} filename 文件名
  * @returns {Number}
  */
-const fileSize = function(filename) {
+const fileSize = function (filename) {
     try {
         let stat = fs.statSync(filename);
         return stat.size || 0;

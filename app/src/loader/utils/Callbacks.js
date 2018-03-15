@@ -5,11 +5,11 @@
  * @module loader/utils/Callbacks
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     /**
      * @class Callbacks
      */
-    var Callbacks = function() {
+    var Callbacks = function () {
         this.handler = null;
         this.callbacks = [];
     };
@@ -19,7 +19,7 @@ define(function(require, exports, module) {
      *
      * @returns {Number}
      */
-    Callbacks.prototype.size = function() {
+    Callbacks.prototype.size = function () {
         return this.callbacks.length;
     };
 
@@ -30,7 +30,7 @@ define(function(require, exports, module) {
      * @returns {this} 返回当前实例
      * @throws {TypeError}
      */
-    Callbacks.prototype.add = function(callback) {
+    Callbacks.prototype.add = function (callback) {
         if ({}.toString.call(callback) === '[object Function]') {
             this.callbacks.push(callback);
         } else {
@@ -46,7 +46,7 @@ define(function(require, exports, module) {
      * @param {Function} callback 回调函数
      * @returns {this} 返回当前实例
      */
-    Callbacks.prototype.remove = function(callback) {
+    Callbacks.prototype.remove = function (callback) {
         var index = this.callbacks.indexOf(callback);
 
         while (index > -1) {
@@ -62,7 +62,7 @@ define(function(require, exports, module) {
      *
      * @returns {this} 返回当前实例
      */
-    Callbacks.prototype.clear = function() {
+    Callbacks.prototype.clear = function () {
         this.callbacks = [];
 
         return this;
@@ -75,7 +75,7 @@ define(function(require, exports, module) {
      * @param {...Any} [args] 参数列表
      * @returns {this} 返回当前实例
      */
-    Callbacks.prototype.call = function(context /* , ...args */) {
+    Callbacks.prototype.call = function (context /* , ...args */) {
         return this.apply(context, [].slice.call(arguments, 1));
     };
 
@@ -87,7 +87,7 @@ define(function(require, exports, module) {
      * @returns {this} 返回当前实例
      * @throws {Error} 执行回调时回调函数抛出的异常
      */
-    Callbacks.prototype.apply = function(context, args) {
+    Callbacks.prototype.apply = function (context, args) {
         var i = 0, l = this.callbacks.length;
 
         for ( ; i < l; i += 1) {
@@ -112,7 +112,7 @@ define(function(require, exports, module) {
      * @returns {this} 返回当前实例
      * @throws {TypeError}
      */
-    Callbacks.prototype.onError = function(handler) {
+    Callbacks.prototype.onError = function (handler) {
         if ({}.toString.call(handler) === '[object Function]') {
             this.handler = handler;
         } else {

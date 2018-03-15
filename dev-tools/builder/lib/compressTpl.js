@@ -11,7 +11,7 @@ const minify = require('html-minifier').minify;
 
 let runtime = {};
 
-const compressTpl = function(filename, name) {
+const compressTpl = function (filename, name) {
     let tplContent;
 
     try {
@@ -41,12 +41,12 @@ const compressTpl = function(filename, name) {
     printUtils.info(`压缩 ${name}`);
 };
 
-module.exports = function(data) {
+module.exports = function (data) {
     runtime = data;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let srcPath = runtime.srcPath;
         let hasError = false;
-        walkDirSync(srcPath, function(filename) {
+        walkDirSync(srcPath, function (filename) {
             if (!hasError && /\.tpl$/i.test(filename)) {
                 let name = filename.replace(srcPath, '');
                 name = name.replace(/\\/g, '/');
@@ -58,7 +58,7 @@ module.exports = function(data) {
                     reject(e);
                 }
             }
-        }, function(err) {
+        }, function (err) {
             hasError = true;
             printUtils.error(`遍历文件夹失败! ${srcPath}`);
             reject(err);

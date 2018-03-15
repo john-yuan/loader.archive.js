@@ -5,16 +5,16 @@
  * @module loader/core/template
  * @version 1.0.0
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     /**
      * 编译模板字符串（ejs）
      *
      * @param {String} templateText ejs 模板字符串
      * @returns {Function}
      */
-    var template = function(templateText) {
+    var template = function (templateText) {
         if (typeof DEBUG !== 'undefined' && DEBUG === true) {
-            return (function() {
+            return (function () {
                 var ejs = require('loader/deps/ejs');
                 return ejs.compile(templateText, {
                     client: true,
@@ -23,7 +23,7 @@ define(function(require, exports, module) {
                 });
             })();
         } else {
-            return function() {};
+            return function () {};
         }
     };
 
