@@ -12,9 +12,14 @@ const JSDOM = require('jsdom').JSDOM;
 const autoprefixer = require("autoprefixer");
 const CleanCSS = require("clean-css");
 const postcss = require("postcss");
+const md5 = require('./md5');
 
 let runtime = {};
 let dom, window, document;
+
+const isAbsoluteURL = function (url) {
+    return /^(?:[a-z][a-z0-9\-\.\+]*:)?\/\//i.test(url);
+};
 
 const uglify = function (code) {
     let options = JSON.parse(JSON.stringify(runtime.config.uglifyOptions || {}));
@@ -73,9 +78,17 @@ const compressHtml = function (filepath, filename) {
     window = dom.window;
     document = window.document;
 
-    addGlobalDefs();
-    compressScript();
-    compressStyle();
+    let scriptToRemove = document.querySelectorAll('script[\\@remove]');
+
+    if (scriptToRemove) {
+        [].slice.call(scriptToRemove).forEach((node) => {
+            node.parentNode.removeChild(node);
+        });
+    }
+
+    addGlobalDefs(filepath, filename);
+    compressScript(filepath, filename);
+    compressStyle(filepath, filename);
 
     try {
         htmlText = dom.serialize();
@@ -92,7 +105,7 @@ const compressHtml = function (filepath, filename) {
     }
 };
 
-const addGlobalDefs = function () {
+const addGlobalDefs = function (filepath, filename) {
     let options = JSON.parse(JSON.stringify(runtime.config.uglifyOptions || {}));
 
     options.compress = options.compress || {};
@@ -123,26 +136,137 @@ const addGlobalDefs = function () {
         };
     }
 
+
     let code = 'var ' + defs.join(',') + ';';
-    let script = document.createElement('script');
-
-    script.innerHTML = code;
-
     let firstScript = document.querySelector('script');
 
     if (firstScript) {
-        firstScript.parentNode.insertBefore(script, firstScript);
+        if (firstScript.hasAttribute('src')) {
+            let src = firstScript.getAttribute('src');
+            let dir = path.dirname(filepath);
+            let srcPath = path.resolve(dir, src);
+            let currentCode;
+
+            try {
+                currentCode = fs.readFileSync(srcPath).toString();
+            } catch(e) {
+                printUtils.error(`读取文件失败失败! ${srcPath}`);
+                throw e;
+            }
+            currentCode = code + '\n' + currentCode;
+            try {
+                fse.outputFileSync(srcPath, currentCode);
+            } catch (e) {
+                printUtils.error(`保存文件失败失败! ${srcPath}`);
+                throw e;
+            }
+        } else {
+            let currentCode = firstScript.innerHTML;
+            currentCode = code + '\n' + currentCode;
+            firstScript.innerHTML = currentCode;
+        }
     } else {
+        let script = document.createElement('script');
+        if (runtime.config.globalDefsDir) {
+            let globalDefsDir = runtime.config.globalDefsDir;
+
+            globalDefsDir = globalDefsDir.replace(/\\+/g, '/');
+            globalDefsDir = globalDefsDir.replace(/\/+/g, '/');
+            globalDefsDir = globalDefsDir.replace(/^\//, '');
+            globalDefsDir = globalDefsDir.replace(/\/$/, '');
+
+            let dir = path.resolve(path.dirname(filepath), runtime.config.globalDefsDir);
+
+            if (fse.pathExistsSync(dir)) {
+                try {
+                    stat = fs.statSync(dir);
+                } catch (e) {
+                    printUtils.error(`读取文件信息失败! ${dir}`);
+                    throw e;
+                }
+                if (!stat.isDirectory()) {
+                    printUtils.error(`此路径不是一个文件夹! ${dir}`);
+                    throw new Error();
+                }
+            }
+
+            let getFilename = function () {
+                var filename, count = 0;
+
+                do {
+                    count += 1;
+                    filename = path.resolve(dir, 'global.' + count + '.js');
+                } while (fse.pathExistsSync(filename));
+
+                return count;
+            };
+
+            let globalFilename = 'global.' + getFilename() + '.js';
+            let globalSrc = './' + globalDefsDir + '/' + globalFilename;
+            let globalFilepath = path.resolve(dir, globalFilename);
+
+            try {
+                fse.outputFileSync(globalFilepath, code);
+            } catch (e) {
+                printUtils.error(`保存文件失败! ${globalFilepath}`);
+                throw e;
+            }
+
+            script.setAttribute('src', globalSrc);
+        } else {
+            script.innerHTML = code;
+        }
         document.head.appendChild(script);
     }
 };
 
-const compressScript = function () {
+const compressScript = function (filepath, filename) {
     let scripts = [].slice.call(document.getElementsByTagName('script') || []);
 
     scripts.forEach(function (script) {
         if (script.hasAttribute('@remove')) {
             script.parentNode.removeChild(script);
+        } else if (script.hasAttribute('src')) {
+            let src = script.getAttribute('src');
+            if (!isAbsoluteURL(src)) {
+                let dir = path.dirname(filepath);
+                let srcPath = path.resolve(dir, src);
+                let code;
+
+                try {
+                    code = fs.readFileSync(srcPath).toString();
+                } catch(e) {
+                    printUtils.error(`读取文件失败! ${srcPath}`);
+                    throw e;
+                }
+
+                try {
+                    code = uglify(code);
+                } catch(e) {
+                    printUtils.error(`压缩文件失败! ${srcPath}`);
+                    throw e;
+                }
+
+                let hash = md5(code).substr(0, 7);
+                src = src.replace(/(\.js)$/, '.' + hash + '$1');
+                srcPath = srcPath.replace(/(\.js)$/, '.' + hash + '$1');
+
+                try {
+                    fse.outputFileSync(srcPath, code);
+                } catch (e) {
+                    printUtils.error(`保存文件失败! ${srcPath}`);
+                    throw e;
+                }
+
+                try {
+                    fs.utimesSync(srcPath, 60, 60);
+                } catch (e) {
+                    printUtils.error(`修改文件最后修改时间失败! ${srcPath}`);
+                    throw e;
+                }
+
+                script.setAttribute('src', src);
+            }
         } else {
             let code;
             try {
@@ -159,7 +283,7 @@ const compressScript = function () {
     });
 };
 
-const compressStyle = function () {
+const compressStyle = function (filepath, filename) {
     let styles = [].slice.call(document.getElementsByTagName('style') || []);
 
     styles.forEach(function (style) {

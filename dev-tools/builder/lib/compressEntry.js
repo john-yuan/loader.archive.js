@@ -75,7 +75,16 @@ module.exports = function (data) {
             throw e;
         }
 
-        configScriptNode.innerHTML = configText;
+        if (runtime.configSrcPath) {
+            try {
+                fse.outputFileSync(runtime.configSrcPath, configText);
+            } catch(e) {
+                printUtils.error('保存 require.js 配置信息失败!');
+                throw e;
+            }
+        } else {
+            configScriptNode.innerHTML = configText;
+        }
         configScriptNode.removeAttribute('@config');
 
         try {

@@ -15,6 +15,8 @@
     "prodSrcPrefix": "./",
     // uglifyJS3 配置
     "uglifyOptions": {},
+    // 用于保存全局变量脚本文件的文件夹，如果不指定则通过 script 注入
+    "globalDefsDir": "globals",
     // 文件 hash 长度(默认 7)
     "hashSize": 7,
     // 将构建编号作为全局变量(injectBuildId 的值为变量名)保存至 DOM, 留空表示不保存

@@ -79,7 +79,8 @@ const getLoaderDeps = function () {
 
 const getModuleInUse = function () {
     let exclueMods = getLoaderDeps();
-    let modsInUse = ['loader/deps/require'];
+    // let modsInUse = ['loader/deps/require'];
+    let modsInUse = [];
     let pushMod = function (mod) {
         if (mod.indexOf('loader/deps/text!') !== 0) {
             if (exclueMods.indexOf(mod) === -1) {

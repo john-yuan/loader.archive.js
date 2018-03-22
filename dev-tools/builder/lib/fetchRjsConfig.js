@@ -42,7 +42,23 @@ module.exports = function (data) {
             return new Error();
         }
 
-        let configScript = configScriptNode.innerHTML;
+        let configScript = '';
+
+        if (configScriptNode.hasAttribute('src')) {
+            let src = configScriptNode.getAttribute('src');
+            let entryDir = path.dirname(entryPath);
+            let srcPath = path.resolve(entryDir, src);
+            try {
+                configScript = fs.readFileSync(srcPath).toString();
+            } catch(e) {
+                printUtils.error(`读取 require.js 配置文件失败! ${srcPath}`)
+                return new Error();
+            }
+            runtime.configSrcPath = srcPath;
+        } else {
+            configScript = configScriptNode.innerHTML;
+        }
+
         let rjsConfig = null;
 
         (function () {
