@@ -89,6 +89,7 @@ const compressHtml = function (filepath, filename) {
     addGlobalDefs(filepath, filename);
     compressScript(filepath, filename);
     compressStyle(filepath, filename);
+    compressStylesheet(filepath, filename);
 
     try {
         htmlText = dom.serialize();
@@ -309,6 +310,70 @@ const compressStyle = function (filepath, filename) {
                     throw e;
                 }
                 style.innerHTML = code;
+            }
+        }
+    });
+};
+
+const compressStylesheet = function (filepath, filename) {
+    let links = [].slice.call(document.querySelectorAll('link[rel="stylesheet"]'), []);
+
+    links.forEach((link) => {
+        if (link.hasAttribute('@remove')) {
+            link.parentNode.removeChild(link);
+        } else {
+            let type = (link.getAttribute('type') || '').trim().toLowerCase();
+            let href = link.getAttribute('href');
+            if ((!type || type === 'text/css') && href) {
+                let dir = path.dirname(filepath);
+                let hrefPath = path.resolve(dir, href);
+                let cssText;
+
+                try {
+                    cssText = fs.readFileSync(hrefPath).toString();
+                } catch (e) {
+                    printUtils.error(`读取文件失败! ${hrefPath}`);
+                    throw e;
+                }
+
+                try {
+                    let prefixer = postcss([autoprefixer({
+                        browsers: runtime.config.autoprefixerBrowsers || autoprefixer.defaults
+                    })]);
+                    cssText = prefixer.process(cssText).css;
+                } catch(e) {
+                    printUtils.error(`添加 CSS 前缀失败! ${hrefPath}`);
+                    throw e;
+                }
+
+                try {
+                    let cleanCss = new CleanCSS();
+                    cssText = cleanCss.minify(cssText).styles;
+                } catch (e) {
+                    printUtils.error(`压缩 CSS 失败! ${hrefPath}`);
+                    throw e;
+                }
+
+                let hash = md5(cssText).slice(0, 7);
+
+                href = href.replace(/(\..+)$/, '.' + hash + '$1');
+                hrefPath = hrefPath.replace(/(\..+)$/, '.' + hash + '$1');
+
+                try {
+                    fse.outputFileSync(hrefPath, cssText);
+                } catch (e) {
+                    printUtils.error(`保存文件失败! ${hrefPath}`);
+                    throw e;
+                }
+
+                try {
+                    fs.utimesSync(hrefPath, 60, 60);
+                } catch (e) {
+                    printUtils.error(`修改文件最后修改时间失败! ${hrefPath}`);
+                    throw e;
+                }
+
+                link.setAttribute('href', href);
             }
         }
     });
