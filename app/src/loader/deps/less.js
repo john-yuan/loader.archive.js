@@ -10,11 +10,11 @@
  /** * @license Apache-2.0
  */
 
-(function (f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.less = f()}})(function (){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function (e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function (require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.less = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var addDataAttr = require("./utils").addDataAttr,
     browser = require("./browser");
 
-module.exports = function (window, options) {
+module.exports = function(window, options) {
 
     // use options from the current script tag data attribues
     addDataAttr(options, browser.currentScript(window));
@@ -58,7 +58,7 @@ module.exports = function (window, options) {
 
 };
 
-},{"./browser":3,"./utils":10}],2:[function (require,module,exports){
+},{"./browser":3,"./utils":10}],2:[function(require,module,exports){
 /**
  * Kicks off less and compiles any stylesheets
  * used in the browser distributed version of less
@@ -111,7 +111,7 @@ if (options.onReady) {
     less.pageLoadFinished = less.refresh(less.env === 'development').then(resolveOrReject, resolveOrReject);
 }
 
-},{"./add-default-options":1,"./index":8,"promise/polyfill.js":97}],3:[function (require,module,exports){
+},{"./add-default-options":1,"./index":8,"promise/polyfill.js":97}],3:[function(require,module,exports){
 var utils = require("./utils");
 module.exports = {
     createCSS: function (document, styles, sheet) {
@@ -168,19 +168,19 @@ module.exports = {
             }
         }
     },
-    currentScript: function (window) {
+    currentScript: function(window) {
         var document = window.document;
-        return document.currentScript || (function () {
+        return document.currentScript || (function() {
             var scripts = document.getElementsByTagName("script");
             return scripts[scripts.length - 1];
         })();
     }
 };
 
-},{"./utils":10}],4:[function (require,module,exports){
+},{"./utils":10}],4:[function(require,module,exports){
 // Cache system is a bit outdated and could do with work
 
-module.exports = function (window, options, logger) {
+module.exports = function(window, options, logger) {
     var cache = null;
     if (options.env !== 'development') {
         try {
@@ -188,7 +188,7 @@ module.exports = function (window, options, logger) {
         } catch (_) {}
     }
     return {
-        setCSS: function (path, lastModified, modifyVars, styles) {
+        setCSS: function(path, lastModified, modifyVars, styles) {
             if (cache) {
                 logger.info('saving ' + path + ' to cache.');
                 try {
@@ -203,7 +203,7 @@ module.exports = function (window, options, logger) {
                 }
             }
         },
-        getCSS: function (path, webInfo, modifyVars) {
+        getCSS: function(path, webInfo, modifyVars) {
             var css       = cache && cache.getItem(path),
                 timestamp = cache && cache.getItem(path + ':timestamp'),
                 vars      = cache && cache.getItem(path + ':vars');
@@ -221,11 +221,11 @@ module.exports = function (window, options, logger) {
     };
 };
 
-},{}],5:[function (require,module,exports){
+},{}],5:[function(require,module,exports){
 var utils = require("./utils"),
     browser = require("./browser");
 
-module.exports = function (window, less, options) {
+module.exports = function(window, less, options) {
 
     function errorHTML(e, rootHref) {
         var id = 'less-error-message:' + utils.extractId(rootHref || "");
@@ -393,10 +393,10 @@ module.exports = function (window, less, options) {
     };
 };
 
-},{"./browser":3,"./utils":10}],6:[function (require,module,exports){
+},{"./browser":3,"./utils":10}],6:[function(require,module,exports){
 /*global window, XMLHttpRequest */
 
-module.exports = function (options, logger) {
+module.exports = function(options, logger) {
 
     var AbstractFileManager = require("../less/environment/abstract-file-manager.js");
 
@@ -418,7 +418,7 @@ module.exports = function (options, logger) {
         }
     }
 
-    var FileManager = function () {
+    var FileManager = function() {
     };
 
     FileManager.prototype = new AbstractFileManager();
@@ -470,11 +470,11 @@ module.exports = function (options, logger) {
             handleResponse(xhr, callback, errback);
         }
     };
-    FileManager.prototype.supports = function (filename, currentDirectory, options, environment) {
+    FileManager.prototype.supports = function(filename, currentDirectory, options, environment) {
         return true;
     };
 
-    FileManager.prototype.clearFileCache = function () {
+    FileManager.prototype.clearFileCache = function() {
         fileCache = {};
     };
 
@@ -514,8 +514,8 @@ module.exports = function (options, logger) {
     return FileManager;
 };
 
-},{"../less/environment/abstract-file-manager.js":15}],7:[function (require,module,exports){
-module.exports = function () {
+},{"../less/environment/abstract-file-manager.js":15}],7:[function(require,module,exports){
+module.exports = function() {
 
     var functionRegistry = require("./../less/functions/function-registry");
 
@@ -527,15 +527,15 @@ module.exports = function () {
     }
 
     var imageFunctions = {
-        "image-size": function (filePathNode) {
+        "image-size": function(filePathNode) {
             imageSize(this, filePathNode);
             return -1;
         },
-        "image-width": function (filePathNode) {
+        "image-width": function(filePathNode) {
             imageSize(this, filePathNode);
             return -1;
         },
-        "image-height": function (filePathNode) {
+        "image-height": function(filePathNode) {
             imageSize(this, filePathNode);
             return -1;
         }
@@ -544,7 +544,7 @@ module.exports = function () {
     functionRegistry.addMultiple(imageFunctions);
 };
 
-},{"./../less/functions/function-registry":22}],8:[function (require,module,exports){
+},{"./../less/functions/function-registry":22}],8:[function(require,module,exports){
 //
 // index.js
 // Should expose the additional browser functions on to the less object
@@ -552,7 +552,7 @@ module.exports = function () {
 var addDataAttr = require("./utils").addDataAttr,
     browser = require("./browser");
 
-module.exports = function (window, options) {
+module.exports = function(window, options) {
     var document = window.document;
     var less = require('../less')();
 
@@ -596,7 +596,7 @@ module.exports = function (window, options) {
     // only really needed for phantom
     function bind(func, thisArg) {
         var curryArgs = Array.prototype.slice.call(arguments, 2);
-        return function () {
+        return function() {
             var args = curryArgs.concat(Array.prototype.slice.call(arguments, 0));
             return func.apply(thisArg, args);
         };
@@ -617,7 +617,7 @@ module.exports = function (window, options) {
                 /*jshint loopfunc:true */
                 // use closure to store current style
                 less.render(lessText, instanceOptions,
-                        bind(function (style, e, result) {
+                        bind(function(style, e, result) {
                             if (e) {
                                 errors.add(e, "inline");
                             } else {
@@ -674,7 +674,7 @@ module.exports = function (window, options) {
             errors.remove(path);
 
             instanceOptions.rootFileInfo = newFileInfo;
-            less.render(data, instanceOptions, function (e, result) {
+            less.render(data, instanceOptions, function(e, result) {
                 if (e) {
                     e.href = path;
                     callback(e);
@@ -686,7 +686,7 @@ module.exports = function (window, options) {
             });
         }
 
-        fileManager.loadFile(sheet.href, null, instanceOptions, environment, function (e, loadedFile) {
+        fileManager.loadFile(sheet.href, null, instanceOptions, environment, function(e, loadedFile) {
             if (e) {
                 callback(e);
                 return;
@@ -736,7 +736,7 @@ module.exports = function (window, options) {
     // Synchronously get all <link> tags with the 'rel' attribute set to
     // "stylesheet/less".
     //
-    less.registerStylesheetsImmediately = function () {
+    less.registerStylesheetsImmediately = function() {
         var links = document.getElementsByTagName('link');
         less.sheets = [];
 
@@ -752,8 +752,8 @@ module.exports = function (window, options) {
     // Asynchronously get all <link> tags with the 'rel' attribute set to
     // "stylesheet/less", returning a Promise.
     //
-    less.registerStylesheets = function () {
-        return new Promise(function (resolve, reject) {
+    less.registerStylesheets = function() {
+        return new Promise(function(resolve, reject) {
             less.registerStylesheetsImmediately();
             resolve();
         });
@@ -763,7 +763,7 @@ module.exports = function (window, options) {
     // With this function, it's possible to alter variables and re-render
     // CSS without reloading less-files
     //
-    less.modifyVars = function (record) {
+    less.modifyVars = function(record) {
         return less.refresh(true, record, false);
     };
 
@@ -832,8 +832,8 @@ module.exports = function (window, options) {
     return less;
 };
 
-},{"../less":31,"./browser":3,"./cache":4,"./error-reporting":5,"./file-manager":6,"./image-size":7,"./log-listener":9,"./utils":10}],9:[function (require,module,exports){
-module.exports = function (less, options) {
+},{"../less":31,"./browser":3,"./cache":4,"./error-reporting":5,"./file-manager":6,"./image-size":7,"./log-listener":9,"./utils":10}],9:[function(require,module,exports){
+module.exports = function(less, options) {
 
     var logLevel_debug = 4,
         logLevel_info = 3,
@@ -850,22 +850,22 @@ module.exports = function (less, options) {
 
     if (!options.loggers) {
         options.loggers = [{
-            debug: function (msg) {
+            debug: function(msg) {
                 if (options.logLevel >= logLevel_debug) {
                     console.log(msg);
                 }
             },
-            info: function (msg) {
+            info: function(msg) {
                 if (options.logLevel >= logLevel_info) {
                     console.log(msg);
                 }
             },
-            warn: function (msg) {
+            warn: function(msg) {
                 if (options.logLevel >= logLevel_warn) {
                     console.warn(msg);
                 }
             },
-            error: function (msg) {
+            error: function(msg) {
                 if (options.logLevel >= logLevel_error) {
                     console.error(msg);
                 }
@@ -877,9 +877,9 @@ module.exports = function (less, options) {
     }
 };
 
-},{}],10:[function (require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = {
-    extractId: function (href) {
+    extractId: function(href) {
         return href.replace(/^[a-z-]+:\/+?[^\/]+/, '')  // Remove protocol & domain
             .replace(/[\?\&]livereload=\w+/, '')        // Remove LiveReload cachebuster
             .replace(/^\//, '')                         // Remove root /
@@ -887,7 +887,7 @@ module.exports = {
             .replace(/[^\.\w-]+/g, '-')                 // Replace illegal characters
             .replace(/\./g, ':');                       // Replace dots with colons(for valid id)
     },
-    addDataAttr: function (options, tag) {
+    addDataAttr: function(options, tag) {
         for (var opt in tag.dataset) {
             if (tag.dataset.hasOwnProperty(opt)) {
                 if (opt === "env" || opt === "dumpLineNumbers" || opt === "rootpath" || opt === "errorReporting") {
@@ -903,7 +903,7 @@ module.exports = {
     }
 };
 
-},{}],11:[function (require,module,exports){
+},{}],11:[function(require,module,exports){
 var contexts = {};
 module.exports = contexts;
 
@@ -939,7 +939,7 @@ var parseCopyProperties = [
     'pluginManager'     // Used as the plugin manager for the session
 ];
 
-contexts.Parse = function (options) {
+contexts.Parse = function(options) {
     copyFromOriginal(options, this, parseCopyProperties);
 
     if (typeof this.paths === "string") { this.paths = [this.paths]; }
@@ -959,7 +959,7 @@ var evalCopyProperties = [
     'importantScope'  // used to bubble up !important statements
     ];
 
-contexts.Eval = function (options, frames) {
+contexts.Eval = function(options, frames) {
     copyFromOriginal(options, this, evalCopyProperties);
 
     if (typeof this.paths === "string") { this.paths = [this.paths]; }
@@ -987,7 +987,7 @@ contexts.Eval.prototype.isPathRelative = function (path) {
     return !/^(?:[a-z-]+:|\/|#)/i.test(path);
 };
 
-contexts.Eval.prototype.normalizePath = function ( path ) {
+contexts.Eval.prototype.normalizePath = function( path ) {
     var
       segments = path.split("/").reverse(),
       segment;
@@ -1016,7 +1016,7 @@ contexts.Eval.prototype.normalizePath = function ( path ) {
 
 //todo - do the same for the toCSS ?
 
-},{}],12:[function (require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = {
     'aliceblue':'#f0f8ff',
     'antiquewhite':'#faebd7',
@@ -1167,13 +1167,13 @@ module.exports = {
     'yellow':'#ffff00',
     'yellowgreen':'#9acd32'
 };
-},{}],13:[function (require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = {
     colors: require("./colors"),
     unitConversions: require("./unit-conversions")
 };
 
-},{"./colors":12,"./unit-conversions":14}],14:[function (require,module,exports){
+},{"./colors":12,"./unit-conversions":14}],14:[function(require,module,exports){
 module.exports = {
     length: {
         'm': 1,
@@ -1195,8 +1195,8 @@ module.exports = {
         'turn': 1
     }
 };
-},{}],15:[function (require,module,exports){
-var abstractFileManager = function () {
+},{}],15:[function(require,module,exports){
+var abstractFileManager = function() {
 };
 
 abstractFileManager.prototype.getPath = function (filename) {
@@ -1214,27 +1214,27 @@ abstractFileManager.prototype.getPath = function (filename) {
     return filename.slice(0, j + 1);
 };
 
-abstractFileManager.prototype.tryAppendExtension = function (path, ext) {
+abstractFileManager.prototype.tryAppendExtension = function(path, ext) {
     return /(\.[a-z]*$)|([\?;].*)$/.test(path) ? path : path + ext;
 };
 
-abstractFileManager.prototype.tryAppendLessExtension = function (path) {
+abstractFileManager.prototype.tryAppendLessExtension = function(path) {
     return this.tryAppendExtension(path, '.less');
 };
 
-abstractFileManager.prototype.supportsSync = function () {
+abstractFileManager.prototype.supportsSync = function() {
     return false;
 };
 
-abstractFileManager.prototype.alwaysMakePathsAbsolute = function () {
+abstractFileManager.prototype.alwaysMakePathsAbsolute = function() {
     return false;
 };
 
-abstractFileManager.prototype.isPathAbsolute = function (filename) {
+abstractFileManager.prototype.isPathAbsolute = function(filename) {
     return (/^(?:[a-z-]+:|\/|\\|#)/i).test(filename);
 };
 
-abstractFileManager.prototype.join = function (basePath, laterPath) {
+abstractFileManager.prototype.join = function(basePath, laterPath) {
     if (!basePath) {
         return laterPath;
     }
@@ -1320,9 +1320,9 @@ abstractFileManager.prototype.extractUrlParts = function extractUrlParts(url, ba
 
 module.exports = abstractFileManager;
 
-},{}],16:[function (require,module,exports){
+},{}],16:[function(require,module,exports){
 var logger = require("../logger");
-var environment = function (externalEnvironment, fileManagers) {
+var environment = function(externalEnvironment, fileManagers) {
     this.fileManagers = fileManagers || [];
     externalEnvironment = externalEnvironment || {};
 
@@ -1373,7 +1373,7 @@ environment.prototype.clearFileManagers = function () {
 
 module.exports = environment;
 
-},{"../logger":33}],17:[function (require,module,exports){
+},{"../logger":33}],17:[function(require,module,exports){
 var Color = require("../tree/color"),
     functionRegistry = require("./function-registry");
 
@@ -1401,19 +1401,19 @@ function colorBlend(mode, color1, color2) {
 }
 
 var colorBlendModeFunctions = {
-    multiply: function (cb, cs) {
+    multiply: function(cb, cs) {
         return cb * cs;
     },
-    screen: function (cb, cs) {
+    screen: function(cb, cs) {
         return cb + cs - cb * cs;
     },
-    overlay: function (cb, cs) {
+    overlay: function(cb, cs) {
         cb *= 2;
         return (cb <= 1) ?
             colorBlendModeFunctions.multiply(cb, cs) :
             colorBlendModeFunctions.screen(cb - 1, cs);
     },
-    softlight: function (cb, cs) {
+    softlight: function(cb, cs) {
         var d = 1, e = cb;
         if (cs > 0.5) {
             e = 1;
@@ -1422,21 +1422,21 @@ var colorBlendModeFunctions = {
         }
         return cb - (1 - 2 * cs) * e * (d - cb);
     },
-    hardlight: function (cb, cs) {
+    hardlight: function(cb, cs) {
         return colorBlendModeFunctions.overlay(cs, cb);
     },
-    difference: function (cb, cs) {
+    difference: function(cb, cs) {
         return Math.abs(cb - cs);
     },
-    exclusion: function (cb, cs) {
+    exclusion: function(cb, cs) {
         return cb + cs - 2 * cb * cs;
     },
 
     // non-w3c functions:
-    average: function (cb, cs) {
+    average: function(cb, cs) {
         return (cb + cs) / 2;
     },
-    negation: function (cb, cs) {
+    negation: function(cb, cs) {
         return 1 - Math.abs(cb + cs - 1);
     }
 };
@@ -1449,7 +1449,7 @@ for (var f in colorBlendModeFunctions) {
 
 functionRegistry.addMultiple(colorBlend);
 
-},{"../tree/color":50,"./function-registry":22}],18:[function (require,module,exports){
+},{"../tree/color":50,"./function-registry":22}],18:[function(require,module,exports){
 var Dimension = require("../tree/dimension"),
     Color = require("../tree/color"),
     Quoted = require("../tree/quoted"),
@@ -1526,11 +1526,11 @@ colorFunctions = {
             a);
     },
 
-    hsv: function (h, s, v) {
+    hsv: function(h, s, v) {
         return colorFunctions.hsva(h, s, v, 1.0);
     },
 
-    hsva: function (h, s, v, a) {
+    hsva: function(h, s, v, a) {
         h = ((number(h) % 360) / 360) * 360;
         s = number(s); v = number(v); a = number(a);
 
@@ -1564,7 +1564,7 @@ colorFunctions = {
     lightness: function (color) {
         return new Dimension(color.toHSL().l * 100, '%');
     },
-    hsvhue: function (color) {
+    hsvhue: function(color) {
         return new Dimension(color.toHSV().h);
     },
     hsvsaturation: function (color) {
@@ -1750,7 +1750,7 @@ colorFunctions = {
     argb: function (color) {
         return new Anonymous(color.toARGB());
     },
-    color: function (c) {
+    color: function(c) {
         if ((c instanceof Quoted) &&
             (/^#([a-f0-9]{6}|[a-f0-9]{3})$/i.test(c.value))) {
             return new Color(c.value.slice(1));
@@ -1764,26 +1764,26 @@ colorFunctions = {
             message: "argument must be a color keyword or 3/6 digit hex e.g. #FFF"
         };
     },
-    tint: function (color, amount) {
+    tint: function(color, amount) {
         return colorFunctions.mix(colorFunctions.rgb(255, 255, 255), color, amount);
     },
-    shade: function (color, amount) {
+    shade: function(color, amount) {
         return colorFunctions.mix(colorFunctions.rgb(0, 0, 0), color, amount);
     }
 };
 functionRegistry.addMultiple(colorFunctions);
 
-},{"../tree/anonymous":46,"../tree/color":50,"../tree/dimension":56,"../tree/quoted":73,"./function-registry":22}],19:[function (require,module,exports){
-module.exports = function (environment) {
+},{"../tree/anonymous":46,"../tree/color":50,"../tree/dimension":56,"../tree/quoted":73,"./function-registry":22}],19:[function(require,module,exports){
+module.exports = function(environment) {
     var Quoted = require("../tree/quoted"),
         URL = require("../tree/url"),
         functionRegistry = require("./function-registry"),
-        fallback = function (functionThis, node) {
+        fallback = function(functionThis, node) {
             return new URL(node, functionThis.index, functionThis.currentFileInfo).eval(functionThis.context);
         },
         logger = require('../logger');
 
-    functionRegistry.add("data-uri", function (mimetypeNode, filePathNode) {
+    functionRegistry.add("data-uri", function(mimetypeNode, filePathNode) {
 
         if (!filePathNode) {
             filePathNode = mimetypeNode;
@@ -1860,7 +1860,7 @@ module.exports = function (environment) {
     });
 };
 
-},{"../logger":33,"../tree/quoted":73,"../tree/url":80,"./function-registry":22}],20:[function (require,module,exports){
+},{"../logger":33,"../tree/quoted":73,"../tree/url":80,"./function-registry":22}],20:[function(require,module,exports){
 var Keyword = require("../tree/keyword"),
     functionRegistry = require("./function-registry");
 
@@ -1889,10 +1889,10 @@ functionRegistry.add("default", defaultFunc.eval.bind(defaultFunc));
 
 module.exports = defaultFunc;
 
-},{"../tree/keyword":65,"./function-registry":22}],21:[function (require,module,exports){
+},{"../tree/keyword":65,"./function-registry":22}],21:[function(require,module,exports){
 var Expression = require("../tree/expression");
 
-var functionCaller = function (name, context, index, currentFileInfo) {
+var functionCaller = function(name, context, index, currentFileInfo) {
     this.name = name.toLowerCase();
     this.index = index;
     this.context = context;
@@ -1900,10 +1900,10 @@ var functionCaller = function (name, context, index, currentFileInfo) {
 
     this.func = context.frames[0].functionRegistry.get(this.name);
 };
-functionCaller.prototype.isValid = function () {
+functionCaller.prototype.isValid = function() {
     return Boolean(this.func);
 };
-functionCaller.prototype.call = function (args) {
+functionCaller.prototype.call = function(args) {
 
     // This code is terrible and should be replaced as per this issue...
     // https://github.com/less/less.js/issues/2477
@@ -1914,7 +1914,7 @@ functionCaller.prototype.call = function (args) {
             }
             return true;
         })
-        .map(function (item) {
+        .map(function(item) {
             if (item.type === "Expression") {
                 var subNodes = item.value.filter(function (item) {
                     if (item.type === "Comment") {
@@ -1937,11 +1937,11 @@ functionCaller.prototype.call = function (args) {
 
 module.exports = functionCaller;
 
-},{"../tree/expression":59}],22:[function (require,module,exports){
+},{"../tree/expression":59}],22:[function(require,module,exports){
 function makeRegistry( base ) {
     return {
         _data: {},
-        add: function (name, func) {
+        add: function(name, func) {
             // precautionary case conversion, as later querying of
             // the registry by function-caller uses lower case as well.
             name = name.toLowerCase();
@@ -1951,24 +1951,24 @@ function makeRegistry( base ) {
             }
             this._data[name] = func;
         },
-        addMultiple: function (functions) {
+        addMultiple: function(functions) {
             Object.keys(functions).forEach(
-                function (name) {
+                function(name) {
                     this.add(name, functions[name]);
                 }.bind(this));
         },
-        get: function (name) {
+        get: function(name) {
             return this._data[name] || ( base && base.get( name ));
         },
-        inherit : function () {
+        inherit : function() {
             return makeRegistry( this );
         }
     };
 }
 
 module.exports = makeRegistry( null );
-},{}],23:[function (require,module,exports){
-module.exports = function (environment) {
+},{}],23:[function(require,module,exports){
+module.exports = function(environment) {
     var functions = {
         functionRegistry: require("./function-registry"),
         functionCaller: require("./function-caller")
@@ -1988,10 +1988,10 @@ module.exports = function (environment) {
     return functions;
 };
 
-},{"./color":18,"./color-blending":17,"./data-uri":19,"./default":20,"./function-caller":21,"./function-registry":22,"./math":25,"./number":26,"./string":27,"./svg":28,"./types":29}],24:[function (require,module,exports){
+},{"./color":18,"./color-blending":17,"./data-uri":19,"./default":20,"./function-caller":21,"./function-registry":22,"./math":25,"./number":26,"./string":27,"./svg":28,"./types":29}],24:[function(require,module,exports){
 var Dimension = require("../tree/dimension");
 
-var MathHelper = function () {
+var MathHelper = function() {
 };
 MathHelper._math = function (fn, unit, n) {
     if (!(n instanceof Dimension)) {
@@ -2005,7 +2005,7 @@ MathHelper._math = function (fn, unit, n) {
     return new Dimension(fn(parseFloat(n.value)), unit);
 };
 module.exports = MathHelper;
-},{"../tree/dimension":56}],25:[function (require,module,exports){
+},{"../tree/dimension":56}],25:[function(require,module,exports){
 var functionRegistry = require("./function-registry"),
     mathHelper = require("./math-helper.js");
 
@@ -2031,12 +2031,12 @@ for (var f in mathFunctions) {
 
 mathFunctions.round = function (n, f) {
     var fraction = typeof f === "undefined" ? 0 : f.value;
-    return mathHelper._math(function (num) { return num.toFixed(fraction); }, null, n);
+    return mathHelper._math(function(num) { return num.toFixed(fraction); }, null, n);
 };
 
 functionRegistry.addMultiple(mathFunctions);
 
-},{"./function-registry":22,"./math-helper.js":24}],26:[function (require,module,exports){
+},{"./function-registry":22,"./math-helper.js":24}],26:[function(require,module,exports){
 var Dimension = require("../tree/dimension"),
     Anonymous = require("../tree/anonymous"),
     functionRegistry = require("./function-registry"),
@@ -2097,10 +2097,10 @@ functionRegistry.addMultiple({
     pi: function () {
         return new Dimension(Math.PI);
     },
-    mod: function (a, b) {
+    mod: function(a, b) {
         return new Dimension(a.value % b.value, a.unit);
     },
-    pow: function (x, y) {
+    pow: function(x, y) {
         if (typeof x === "number" && typeof y === "number") {
             x = new Dimension(x);
             y = new Dimension(y);
@@ -2111,7 +2111,7 @@ functionRegistry.addMultiple({
         return new Dimension(Math.pow(x.value, y.value), x.unit);
     },
     percentage: function (n) {
-        var result = mathHelper._math(function (num) {
+        var result = mathHelper._math(function(num) {
             return num * 100;
         }, '%', n);
 
@@ -2119,7 +2119,7 @@ functionRegistry.addMultiple({
     }
 });
 
-},{"../tree/anonymous":46,"../tree/dimension":56,"./function-registry":22,"./math-helper.js":24}],27:[function (require,module,exports){
+},{"../tree/anonymous":46,"../tree/dimension":56,"./function-registry":22,"./math-helper.js":24}],27:[function(require,module,exports){
 var Quoted = require("../tree/quoted"),
     Anonymous = require("../tree/anonymous"),
     JavaScript = require("../tree/javascript"),
@@ -2147,7 +2147,7 @@ functionRegistry.addMultiple({
 
         for (var i = 0; i < args.length; i++) {
             /*jshint loopfunc:true */
-            result = result.replace(/%[sda]/i, function (token) {
+            result = result.replace(/%[sda]/i, function(token) {
                 var value = ((args[i].type === "Quoted") &&
                     token.match(/s/i)) ? args[i].value : args[i].toCSS();
                 return token.match(/[A-Z]$/) ? encodeURIComponent(value) : value;
@@ -2158,8 +2158,8 @@ functionRegistry.addMultiple({
     }
 });
 
-},{"../tree/anonymous":46,"../tree/javascript":63,"../tree/quoted":73,"./function-registry":22}],28:[function (require,module,exports){
-module.exports = function (environment) {
+},{"../tree/anonymous":46,"../tree/javascript":63,"../tree/quoted":73,"./function-registry":22}],28:[function(require,module,exports){
+module.exports = function(environment) {
     var Dimension = require("../tree/dimension"),
         Color = require("../tree/color"),
         Expression = require("../tree/expression"),
@@ -2167,7 +2167,7 @@ module.exports = function (environment) {
         URL = require("../tree/url"),
         functionRegistry = require("./function-registry");
 
-    functionRegistry.add("svg-gradient", function (direction) {
+    functionRegistry.add("svg-gradient", function(direction) {
 
         var stops,
             gradientDirectionSvg,
@@ -2248,7 +2248,7 @@ module.exports = function (environment) {
     });
 };
 
-},{"../tree/color":50,"../tree/dimension":56,"../tree/expression":59,"../tree/quoted":73,"../tree/url":80,"./function-registry":22}],29:[function (require,module,exports){
+},{"../tree/color":50,"../tree/dimension":56,"../tree/expression":59,"../tree/quoted":73,"../tree/url":80,"./function-registry":22}],29:[function(require,module,exports){
 var Keyword = require("../tree/keyword"),
     DetachedRuleset = require("../tree/detached-ruleset"),
     Dimension = require("../tree/dimension"),
@@ -2272,7 +2272,7 @@ var isa = function (n, Type) {
         }
         return (n instanceof Dimension) && n.unit.is(unit) ? Keyword.True : Keyword.False;
     },
-    getItemsFromNode = function (node) {
+    getItemsFromNode = function(node) {
         // handle non-array values as an array of length 1
         // return 'undefined' if index is invalid
         var items = Array.isArray(node.value) ?
@@ -2329,22 +2329,22 @@ functionRegistry.addMultiple({
     "get-unit": function (n) {
         return new Anonymous(n.unit);
     },
-    extract: function (values, index) {
+    extract: function(values, index) {
         index = index.value - 1; // (1-based index)
 
         return getItemsFromNode(values)[index];
     },
-    length: function (values) {
+    length: function(values) {
         return new Dimension(getItemsFromNode(values).length);
     }
 });
 
-},{"../tree/anonymous":46,"../tree/color":50,"../tree/detached-ruleset":55,"../tree/dimension":56,"../tree/keyword":65,"../tree/operation":71,"../tree/quoted":73,"../tree/url":80,"./function-registry":22}],30:[function (require,module,exports){
+},{"../tree/anonymous":46,"../tree/color":50,"../tree/detached-ruleset":55,"../tree/dimension":56,"../tree/keyword":65,"../tree/operation":71,"../tree/quoted":73,"../tree/url":80,"./function-registry":22}],30:[function(require,module,exports){
 var contexts = require("./contexts"),
     Parser = require('./parser/parser'),
     FunctionImporter = require('./plugins/function-importer');
 
-module.exports = function (environment) {
+module.exports = function(environment) {
 
     // FileInfo = {
     //  'relativeUrls' - option - whether to adjust URL's to be relative
@@ -2355,7 +2355,7 @@ module.exports = function (environment) {
     //  'entryPath' - absolute path to the entry file
     //  'reference' - whether the file should not be output and only output parts that are referenced
 
-    var ImportManager = function (context, rootFileInfo) {
+    var ImportManager = function(context, rootFileInfo) {
         this.rootFilename = rootFileInfo.filename;
         this.paths = context.paths || [];  // Search paths, when importing
         this.contents = {};             // map - filename to contents of all the files
@@ -2411,7 +2411,7 @@ module.exports = function (environment) {
             path = fileManager.tryAppendExtension(path, importOptions.plugin ? ".js" : ".less");
         }
 
-        var loadFileCallback = function (loadedFile) {
+        var loadFileCallback = function(loadedFile) {
             var resolvedFilename = loadedFile.filename,
                 contents = loadedFile.contents.replace(/^\uFEFF/, '');
 
@@ -2458,7 +2458,7 @@ module.exports = function (environment) {
         };
 
         var promise = fileManager.loadFile(path, currentFileInfo.currentDirectory, this.context, environment,
-            function (err, loadedFile) {
+            function(err, loadedFile) {
             if (err) {
                 fileParsedFunc(err);
             } else {
@@ -2472,8 +2472,8 @@ module.exports = function (environment) {
     return ImportManager;
 };
 
-},{"./contexts":11,"./parser/parser":38,"./plugins/function-importer":40}],31:[function (require,module,exports){
-module.exports = function (environment, fileManagers) {
+},{"./contexts":11,"./parser/parser":38,"./plugins/function-importer":40}],31:[function(require,module,exports){
+module.exports = function(environment, fileManagers) {
     var SourceMapOutput, SourceMapBuilder, ParseTree, ImportManager, Environment;
 
     var less = {
@@ -2503,7 +2503,7 @@ module.exports = function (environment, fileManagers) {
     return less;
 };
 
-},{"./contexts":11,"./data":13,"./environment/abstract-file-manager":15,"./environment/environment":16,"./functions":23,"./import-manager":30,"./less-error":32,"./logger":33,"./parse":35,"./parse-tree":34,"./parser/parser":38,"./plugin-manager":39,"./render":41,"./source-map-builder":42,"./source-map-output":43,"./transform-tree":44,"./tree":62,"./utils":83,"./visitors":87}],32:[function (require,module,exports){
+},{"./contexts":11,"./data":13,"./environment/abstract-file-manager":15,"./environment/environment":16,"./functions":23,"./import-manager":30,"./less-error":32,"./logger":33,"./parse":35,"./parse-tree":34,"./parser/parser":38,"./plugin-manager":39,"./render":41,"./source-map-builder":42,"./source-map-output":43,"./transform-tree":44,"./tree":62,"./utils":83,"./visitors":87}],32:[function(require,module,exports){
 var utils = require("./utils");
 
 var LessError = module.exports = function LessError(e, importManager, currentFilename) {
@@ -2547,24 +2547,24 @@ if (typeof Object.create === 'undefined') {
 
 LessError.prototype.constructor = LessError;
 
-},{"./utils":83}],33:[function (require,module,exports){
+},{"./utils":83}],33:[function(require,module,exports){
 module.exports = {
-    error: function (msg) {
+    error: function(msg) {
         this._fireEvent("error", msg);
     },
-    warn: function (msg) {
+    warn: function(msg) {
         this._fireEvent("warn", msg);
     },
-    info: function (msg) {
+    info: function(msg) {
         this._fireEvent("info", msg);
     },
-    debug: function (msg) {
+    debug: function(msg) {
         this._fireEvent("debug", msg);
     },
-    addListener: function (listener) {
+    addListener: function(listener) {
         this._listeners.push(listener);
     },
-    removeListener: function (listener) {
+    removeListener: function(listener) {
         for (var i = 0; i < this._listeners.length; i++) {
             if (this._listeners[i] === listener) {
                 this._listeners.splice(i, 1);
@@ -2572,29 +2572,29 @@ module.exports = {
             }
         }
     },
-    _fireEvent: function (type, msg) {
+    _fireEvent: function(type, msg) {
         for (var i = 0; i < this._listeners.length; i++) {
             var logFunction = this._listeners[i][type];
             if (logFunction) {
-                logfunction (msg);
+                logFunction(msg);
             }
         }
     },
     _listeners: []
 };
 
-},{}],34:[function (require,module,exports){
+},{}],34:[function(require,module,exports){
 var LessError = require('./less-error'),
     transformTree = require("./transform-tree"),
     logger = require("./logger");
 
-module.exports = function (SourceMapBuilder) {
-    var ParseTree = function (root, imports) {
+module.exports = function(SourceMapBuilder) {
+    var ParseTree = function(root, imports) {
         this.root = root;
         this.imports = imports;
     };
 
-    ParseTree.prototype.toCSS = function (options) {
+    ParseTree.prototype.toCSS = function(options) {
         var evaldRoot, result = {}, sourceMapBuilder;
         try {
             evaldRoot = transformTree(this.root, options);
@@ -2645,13 +2645,13 @@ module.exports = function (SourceMapBuilder) {
     return ParseTree;
 };
 
-},{"./less-error":32,"./logger":33,"./transform-tree":44}],35:[function (require,module,exports){
+},{"./less-error":32,"./logger":33,"./transform-tree":44}],35:[function(require,module,exports){
 var PromiseConstructor,
     contexts = require("./contexts"),
     Parser = require('./parser/parser'),
     PluginManager = require('./plugin-manager');
 
-module.exports = function (environment, ParseTree, ImportManager) {
+module.exports = function(environment, ParseTree, ImportManager) {
     var parse = function (input, options, callback) {
         options = options || {};
 
@@ -2666,7 +2666,7 @@ module.exports = function (environment, ParseTree, ImportManager) {
             }
             var self = this;
             return new PromiseConstructor(function (resolve, reject) {
-                parse.call(self, input, options, function (err, output) {
+                parse.call(self, input, options, function(err, output) {
                     if (err) {
                         reject(err);
                     } else {
@@ -2715,7 +2715,7 @@ module.exports = function (environment, ParseTree, ImportManager) {
     return parse;
 };
 
-},{"./contexts":11,"./parser/parser":38,"./plugin-manager":39,"promise":undefined}],36:[function (require,module,exports){
+},{"./contexts":11,"./parser/parser":38,"./plugin-manager":39,"promise":undefined}],36:[function(require,module,exports){
 // Split the input into chunks.
 module.exports = function (input, fail) {
     var len = input.length, level = 0, parenLevel = 0,
@@ -2829,10 +2829,10 @@ module.exports = function (input, fail) {
     return chunks;
 };
 
-},{}],37:[function (require,module,exports){
+},{}],37:[function(require,module,exports){
 var chunker = require('./chunker');
 
-module.exports = function () {
+module.exports = function() {
     var input,       // LeSS input string
         j,           // current chunk
         saveStack = [],   // holds state for backtracking
@@ -2911,11 +2911,11 @@ module.exports = function () {
         return oldi !== parserInput.i || oldj !== j;
     }
 
-    parserInput.save = function () {
+    parserInput.save = function() {
         currentPos = parserInput.i;
         saveStack.push( { current: current, i: parserInput.i, j: j });
     };
-    parserInput.restore = function (possibleErrorMessage) {
+    parserInput.restore = function(possibleErrorMessage) {
 
         if (parserInput.i > furthest || (parserInput.i === furthest && possibleErrorMessage && !furthestPossibleErrorMessage)) {
             furthest = parserInput.i;
@@ -2926,7 +2926,7 @@ module.exports = function () {
         currentPos = parserInput.i = state.i;
         j = state.j;
     };
-    parserInput.forget = function () {
+    parserInput.forget = function() {
         saveStack.pop();
     };
     parserInput.isWhitespace = function (offset) {
@@ -2936,7 +2936,7 @@ module.exports = function () {
     };
 
     // Specialization of $(tok)
-    parserInput.$re = function (tok) {
+    parserInput.$re = function(tok) {
         if (parserInput.i > currentPos) {
             current = current.slice(parserInput.i - currentPos);
             currentPos = parserInput.i;
@@ -2955,7 +2955,7 @@ module.exports = function () {
         return m.length === 1 ? m[0] : m;
     };
 
-    parserInput.$char = function (tok) {
+    parserInput.$char = function(tok) {
         if (input.charAt(parserInput.i) !== tok) {
             return null;
         }
@@ -2963,7 +2963,7 @@ module.exports = function () {
         return tok;
     };
 
-    parserInput.$str = function (tok) {
+    parserInput.$str = function(tok) {
         var tokLength = tok.length;
 
         // https://jsperf.com/string-startswith/21
@@ -2977,7 +2977,7 @@ module.exports = function () {
         return tok;
     };
 
-    parserInput.$quoted = function () {
+    parserInput.$quoted = function() {
 
         var startChar = input.charAt(parserInput.i);
         if (startChar !== "'" && startChar !== '"') {
@@ -3011,7 +3011,7 @@ module.exports = function () {
 
     // Same as $(), but don't change the state of the parser,
     // just return the match.
-    parserInput.peek = function (tok) {
+    parserInput.peek = function(tok) {
         if (typeof tok === 'string') {
             // https://jsperf.com/string-startswith/21
             for (var i = 0; i < tok.length; i++) {
@@ -3027,25 +3027,25 @@ module.exports = function () {
 
     // Specialization of peek()
     // TODO remove or change some currentChar calls to peekChar
-    parserInput.peekChar = function (tok) {
+    parserInput.peekChar = function(tok) {
         return input.charAt(parserInput.i) === tok;
     };
 
-    parserInput.currentChar = function () {
+    parserInput.currentChar = function() {
         return input.charAt(parserInput.i);
     };
 
-    parserInput.getInput = function () {
+    parserInput.getInput = function() {
         return input;
     };
 
-    parserInput.peekNotNumeric = function () {
+    parserInput.peekNotNumeric = function() {
         var c = input.charCodeAt(parserInput.i);
         //Is the first char of the dimension 0-9, '.', '+' or '-'
         return (c > CHARCODE_9 || c < CHARCODE_PLUS) || c === CHARCODE_FORWARD_SLASH || c === CHARCODE_COMMA;
     };
 
-    parserInput.start = function (str, chunkInput, failFunction) {
+    parserInput.start = function(str, chunkInput, failFunction) {
         input = str;
         parserInput.i = j = currentPos = furthest = 0;
 
@@ -3070,7 +3070,7 @@ module.exports = function () {
         skipWhitespace(0);
     };
 
-    parserInput.end = function () {
+    parserInput.end = function() {
         var message,
             isFinished = parserInput.i >= input.length;
 
@@ -3090,7 +3090,7 @@ module.exports = function () {
     return parserInput;
 };
 
-},{"./chunker":36}],38:[function (require,module,exports){
+},{"./chunker":36}],38:[function(require,module,exports){
 var LessError = require('../less-error'),
     tree = require("../tree"),
     visitors = require("../visitors"),
@@ -3720,7 +3720,7 @@ var Parser = function Parser(context, imports, fileInfo) {
             //
             // extend syntax - used to extend selectors
             //
-            extend: function (isRule) {
+            extend: function(isRule) {
                 var elements, e, index = parserInput.i, option, extendList, extend;
 
                 if (!parserInput.$str(isRule ? "&:extend(" : ":extend(")) {
@@ -3766,7 +3766,7 @@ var Parser = function Parser(context, imports, fileInfo) {
             //
             // extendRule - used in a rule to extend all the parent selectors
             //
-            extendRule: function () {
+            extendRule: function() {
                 return this.extend(true);
             },
 
@@ -4202,7 +4202,7 @@ var Parser = function Parser(context, imports, fileInfo) {
                 }
             },
 
-            blockRuleset: function () {
+            blockRuleset: function() {
                 var block = this.block();
 
                 if (block) {
@@ -4211,7 +4211,7 @@ var Parser = function Parser(context, imports, fileInfo) {
                 return block;
             },
 
-            detachedRuleset: function () {
+            detachedRuleset: function() {
                 var blockRuleset = this.blockRuleset();
                 if (blockRuleset) {
                     return new tree.DetachedRuleset(blockRuleset);
@@ -4361,7 +4361,7 @@ var Parser = function Parser(context, imports, fileInfo) {
                 }
             },
 
-            importOptions: function () {
+            importOptions: function() {
                 var o, options = {}, optionName, value;
 
                 // list of options, surrounded by parens
@@ -4389,7 +4389,7 @@ var Parser = function Parser(context, imports, fileInfo) {
                 return options;
             },
 
-            importOption: function () {
+            importOption: function() {
                 var opt = parserInput.$re(/^(less|css|multiple|once|inline|reference|optional)/);
                 if (opt) {
                     return opt[1];
@@ -4959,7 +4959,7 @@ var Parser = function Parser(context, imports, fileInfo) {
         }
     };
 };
-Parser.serializeVars = function (vars) {
+Parser.serializeVars = function(vars) {
     var s = '';
 
     for (var name in vars) {
@@ -4975,11 +4975,11 @@ Parser.serializeVars = function (vars) {
 
 module.exports = Parser;
 
-},{"../less-error":32,"../tree":62,"../utils":83,"../visitors":87,"./parser-input":37}],39:[function (require,module,exports){
+},{"../less-error":32,"../tree":62,"../utils":83,"../visitors":87,"./parser-input":37}],39:[function(require,module,exports){
 /**
  * Plugin Manager
  */
-var PluginManager = function (less) {
+var PluginManager = function(less) {
     this.less = less;
     this.visitors = [];
     this.preProcessors = [];
@@ -4991,7 +4991,7 @@ var PluginManager = function (less) {
  * Adds all the plugins in the array
  * @param {Array} plugins
  */
-PluginManager.prototype.addPlugins = function (plugins) {
+PluginManager.prototype.addPlugins = function(plugins) {
     if (plugins) {
         for (var i = 0; i < plugins.length; i++) {
             this.addPlugin(plugins[i]);
@@ -5002,7 +5002,7 @@ PluginManager.prototype.addPlugins = function (plugins) {
  *
  * @param plugin
  */
-PluginManager.prototype.addPlugin = function (plugin) {
+PluginManager.prototype.addPlugin = function(plugin) {
     this.installedPlugins.push(plugin);
     plugin.install(this.less, this);
 };
@@ -5011,7 +5011,7 @@ PluginManager.prototype.addPlugin = function (plugin) {
  * when it should run.
  * @param visitor
  */
-PluginManager.prototype.addVisitor = function (visitor) {
+PluginManager.prototype.addVisitor = function(visitor) {
     this.visitors.push(visitor);
 };
 /**
@@ -5019,7 +5019,7 @@ PluginManager.prototype.addVisitor = function (visitor) {
  * @param {object} preProcessor
  * @param {number} priority - guidelines 1 = before import, 1000 = import, 2000 = after import
  */
-PluginManager.prototype.addPreProcessor = function (preProcessor, priority) {
+PluginManager.prototype.addPreProcessor = function(preProcessor, priority) {
     var indexToInsertAt;
     for (indexToInsertAt = 0; indexToInsertAt < this.preProcessors.length; indexToInsertAt++) {
         if (this.preProcessors[indexToInsertAt].priority >= priority) {
@@ -5033,7 +5033,7 @@ PluginManager.prototype.addPreProcessor = function (preProcessor, priority) {
  * @param {object} postProcessor
  * @param {number} priority - guidelines 1 = before compression, 1000 = compression, 2000 = after compression
  */
-PluginManager.prototype.addPostProcessor = function (postProcessor, priority) {
+PluginManager.prototype.addPostProcessor = function(postProcessor, priority) {
     var indexToInsertAt;
     for (indexToInsertAt = 0; indexToInsertAt < this.postProcessors.length; indexToInsertAt++) {
         if (this.postProcessors[indexToInsertAt].priority >= priority) {
@@ -5046,7 +5046,7 @@ PluginManager.prototype.addPostProcessor = function (postProcessor, priority) {
  *
  * @param manager
  */
-PluginManager.prototype.addFileManager = function (manager) {
+PluginManager.prototype.addFileManager = function(manager) {
     this.fileManagers.push(manager);
 };
 /**
@@ -5054,7 +5054,7 @@ PluginManager.prototype.addFileManager = function (manager) {
  * @returns {Array}
  * @private
  */
-PluginManager.prototype.getPreProcessors = function () {
+PluginManager.prototype.getPreProcessors = function() {
     var preProcessors = [];
     for (var i = 0; i < this.preProcessors.length; i++) {
         preProcessors.push(this.preProcessors[i].preProcessor);
@@ -5066,7 +5066,7 @@ PluginManager.prototype.getPreProcessors = function () {
  * @returns {Array}
  * @private
  */
-PluginManager.prototype.getPostProcessors = function () {
+PluginManager.prototype.getPostProcessors = function() {
     var postProcessors = [];
     for (var i = 0; i < this.postProcessors.length; i++) {
         postProcessors.push(this.postProcessors[i].postProcessor);
@@ -5078,7 +5078,7 @@ PluginManager.prototype.getPostProcessors = function () {
  * @returns {Array}
  * @private
  */
-PluginManager.prototype.getVisitors = function () {
+PluginManager.prototype.getVisitors = function() {
     return this.visitors;
 };
 /**
@@ -5086,12 +5086,12 @@ PluginManager.prototype.getVisitors = function () {
  * @returns {Array}
  * @private
  */
-PluginManager.prototype.getFileManagers = function () {
+PluginManager.prototype.getFileManagers = function() {
     return this.fileManagers;
 };
 module.exports = PluginManager;
 
-},{}],40:[function (require,module,exports){
+},{}],40:[function(require,module,exports){
 var LessError = require('../less-error'),
     tree = require("../tree");
 
@@ -5099,24 +5099,24 @@ var FunctionImporter = module.exports = function FunctionImporter(context, fileI
     this.fileInfo = fileInfo;
 };
 
-FunctionImporter.prototype.eval = function (contents, callback) {
+FunctionImporter.prototype.eval = function(contents, callback) {
     var loaded = {},
         loader,
         registry;
 
     registry = {
-        add: function (name, func) {
+        add: function(name, func) {
             loaded[name] = func;
         },
-        addMultiple: function (functions) {
-            Object.keys(functions).forEach(function (name) {
+        addMultiple: function(functions) {
+            Object.keys(functions).forEach(function(name) {
                 loaded[name] = functions[name];
             });
         }
     };
 
     try {
-        loader = new function ("functions", "tree", "fileInfo", contents);
+        loader = new Function("functions", "tree", "fileInfo", contents);
         loader(registry, tree, this.fileInfo);
     } catch(e) {
         callback(new LessError({
@@ -5128,10 +5128,10 @@ FunctionImporter.prototype.eval = function (contents, callback) {
     callback(null, { functions: loaded });
 };
 
-},{"../less-error":32,"../tree":62}],41:[function (require,module,exports){
+},{"../less-error":32,"../tree":62}],41:[function(require,module,exports){
 var PromiseConstructor;
 
-module.exports = function (environment, ParseTree, ImportManager) {
+module.exports = function(environment, ParseTree, ImportManager) {
     var render = function (input, options, callback) {
         if (typeof options === 'function') {
             callback = options;
@@ -5144,7 +5144,7 @@ module.exports = function (environment, ParseTree, ImportManager) {
             }
             var self = this;
             return new PromiseConstructor(function (resolve, reject) {
-                render.call(self, input, options, function (err, output) {
+                render.call(self, input, options, function(err, output) {
                     if (err) {
                         reject(err);
                     } else {
@@ -5153,7 +5153,7 @@ module.exports = function (environment, ParseTree, ImportManager) {
                 });
             });
         } else {
-            this.parse(input, options, function (err, root, imports, options) {
+            this.parse(input, options, function(err, root, imports, options) {
                 if (err) { return callback(err); }
 
                 var result;
@@ -5171,14 +5171,14 @@ module.exports = function (environment, ParseTree, ImportManager) {
     return render;
 };
 
-},{"promise":undefined}],42:[function (require,module,exports){
+},{"promise":undefined}],42:[function(require,module,exports){
 module.exports = function (SourceMapOutput, environment) {
 
     var SourceMapBuilder = function (options) {
         this.options = options;
     };
 
-    SourceMapBuilder.prototype.toCSS = function (rootNode, options, imports) {
+    SourceMapBuilder.prototype.toCSS = function(rootNode, options, imports) {
         var sourceMapOutput = new SourceMapOutput(
             {
                 contentsIgnoredCharsMap: imports.contentsIgnoredChars,
@@ -5203,7 +5203,7 @@ module.exports = function (SourceMapOutput, environment) {
         return css + this.getCSSAppendage();
     };
 
-    SourceMapBuilder.prototype.getCSSAppendage = function () {
+    SourceMapBuilder.prototype.getCSSAppendage = function() {
 
         var sourceMapURL = this.sourceMapURL;
         if (this.options.sourceMapFileInline) {
@@ -5219,30 +5219,30 @@ module.exports = function (SourceMapOutput, environment) {
         return "";
     };
 
-    SourceMapBuilder.prototype.getExternalSourceMap = function () {
+    SourceMapBuilder.prototype.getExternalSourceMap = function() {
         return this.sourceMap;
     };
-    SourceMapBuilder.prototype.setExternalSourceMap = function (sourceMap) {
+    SourceMapBuilder.prototype.setExternalSourceMap = function(sourceMap) {
         this.sourceMap = sourceMap;
     };
 
-    SourceMapBuilder.prototype.isInline = function () {
+    SourceMapBuilder.prototype.isInline = function() {
         return this.options.sourceMapFileInline;
     };
-    SourceMapBuilder.prototype.getSourceMapURL = function () {
+    SourceMapBuilder.prototype.getSourceMapURL = function() {
         return this.sourceMapURL;
     };
-    SourceMapBuilder.prototype.getOutputFilename = function () {
+    SourceMapBuilder.prototype.getOutputFilename = function() {
         return this.options.sourceMapOutputFilename;
     };
-    SourceMapBuilder.prototype.getInputFilename = function () {
+    SourceMapBuilder.prototype.getInputFilename = function() {
         return this.sourceMapInputFilename;
     };
 
     return SourceMapBuilder;
 };
 
-},{}],43:[function (require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports = function (environment) {
 
     var SourceMapOutput = function (options) {
@@ -5273,7 +5273,7 @@ module.exports = function (environment) {
         this._column = 0;
     };
 
-    SourceMapOutput.prototype.normalizeFilename = function (filename) {
+    SourceMapOutput.prototype.normalizeFilename = function(filename) {
         filename = filename.replace(/\\/g, '/');
 
         if (this._sourceMapBasepath && filename.indexOf(this._sourceMapBasepath) === 0) {
@@ -5285,7 +5285,7 @@ module.exports = function (environment) {
         return (this._sourceMapRootpath || "") + filename;
     };
 
-    SourceMapOutput.prototype.add = function (chunk, fileInfo, index, mapLines) {
+    SourceMapOutput.prototype.add = function(chunk, fileInfo, index, mapLines) {
 
         //ignore adding empty strings
         if (!chunk) {
@@ -5341,11 +5341,11 @@ module.exports = function (environment) {
         this._css.push(chunk);
     };
 
-    SourceMapOutput.prototype.isEmpty = function () {
+    SourceMapOutput.prototype.isEmpty = function() {
         return this._css.length === 0;
     };
 
-    SourceMapOutput.prototype.toCSS = function (context) {
+    SourceMapOutput.prototype.toCSS = function(context) {
         this._sourceMapGenerator = new this._sourceMapGeneratorConstructor({ file: this._outputFilename, sourceRoot: null });
 
         if (this._outputSourceFiles) {
@@ -5382,12 +5382,12 @@ module.exports = function (environment) {
     return SourceMapOutput;
 };
 
-},{}],44:[function (require,module,exports){
+},{}],44:[function(require,module,exports){
 var contexts = require("./contexts"),
     visitor = require("./visitors"),
     tree = require("./tree");
 
-module.exports = function (root, options) {
+module.exports = function(root, options) {
     options = options || {};
     var evaldRoot,
         variables = options.variables,
@@ -5458,7 +5458,7 @@ module.exports = function (root, options) {
     return evaldRoot;
 };
 
-},{"./contexts":11,"./tree":62,"./visitors":87}],45:[function (require,module,exports){
+},{"./contexts":11,"./tree":62,"./visitors":87}],45:[function(require,module,exports){
 var Node = require("./node");
 
 var Alpha = function (val) {
@@ -5488,7 +5488,7 @@ Alpha.prototype.genCSS = function (context, output) {
 
 module.exports = Alpha;
 
-},{"./node":70}],46:[function (require,module,exports){
+},{"./node":70}],46:[function(require,module,exports){
 var Node = require("./node");
 
 var Anonymous = function (value, index, currentFileInfo, mapLines, rulesetLike, visibilityInfo) {
@@ -5508,7 +5508,7 @@ Anonymous.prototype.eval = function () {
 Anonymous.prototype.compare = function (other) {
     return other.toCSS && this.toCSS() === other.toCSS() ? 0 : undefined;
 };
-Anonymous.prototype.isRulesetLike = function () {
+Anonymous.prototype.isRulesetLike = function() {
     return this.rulesetLike;
 };
 Anonymous.prototype.genCSS = function (context, output) {
@@ -5516,7 +5516,7 @@ Anonymous.prototype.genCSS = function (context, output) {
 };
 module.exports = Anonymous;
 
-},{"./node":70}],47:[function (require,module,exports){
+},{"./node":70}],47:[function(require,module,exports){
 var Node = require("./node");
 
 var Assignment = function (key, val) {
@@ -5545,7 +5545,7 @@ Assignment.prototype.genCSS = function (context, output) {
 };
 module.exports = Assignment;
 
-},{"./node":70}],48:[function (require,module,exports){
+},{"./node":70}],48:[function(require,module,exports){
 var Node = require("./node");
 
 var Attribute = function (key, op, value) {
@@ -5574,7 +5574,7 @@ Attribute.prototype.toCSS = function (context) {
 };
 module.exports = Attribute;
 
-},{"./node":70}],49:[function (require,module,exports){
+},{"./node":70}],49:[function(require,module,exports){
 var Node = require("./node"),
     FunctionCaller = require("../functions/function-caller");
 //
@@ -5641,7 +5641,7 @@ Call.prototype.genCSS = function (context, output) {
 };
 module.exports = Call;
 
-},{"../functions/function-caller":21,"./node":70}],50:[function (require,module,exports){
+},{"../functions/function-caller":21,"./node":70}],50:[function(require,module,exports){
 var Node = require("./node"),
     colors = require("../data/colors");
 
@@ -5816,7 +5816,7 @@ Color.prototype.compare = function (x) {
         x.alpha  === this.alpha) ? 0 : undefined;
 };
 
-Color.fromKeyword = function (keyword) {
+Color.fromKeyword = function(keyword) {
     var c, key = keyword.toLowerCase();
     if (colors.hasOwnProperty(key)) {
         c = new Color(colors[key].slice(1));
@@ -5832,7 +5832,7 @@ Color.fromKeyword = function (keyword) {
 };
 module.exports = Color;
 
-},{"../data/colors":12,"./node":70}],51:[function (require,module,exports){
+},{"../data/colors":12,"./node":70}],51:[function(require,module,exports){
 var Node = require("./node");
 
 var Combinator = function (value) {
@@ -5857,7 +5857,7 @@ Combinator.prototype.genCSS = function (context, output) {
 };
 module.exports = Combinator;
 
-},{"./node":70}],52:[function (require,module,exports){
+},{"./node":70}],52:[function(require,module,exports){
 var Node = require("./node"),
     getDebugInfo = require("./debug-info");
 
@@ -5876,13 +5876,13 @@ Comment.prototype.genCSS = function (context, output) {
     }
     output.add(this.value);
 };
-Comment.prototype.isSilent = function (context) {
+Comment.prototype.isSilent = function(context) {
     var isCompressed = context.compress && this.value[2] !== "!";
     return this.isLineComment || isCompressed;
 };
 module.exports = Comment;
 
-},{"./debug-info":54,"./node":70}],53:[function (require,module,exports){
+},{"./debug-info":54,"./node":70}],53:[function(require,module,exports){
 var Node = require("./node");
 
 var Condition = function (op, l, r, i, negate) {
@@ -5921,8 +5921,8 @@ Condition.prototype.eval = function (context) {
 };
 module.exports = Condition;
 
-},{"./node":70}],54:[function (require,module,exports){
-var debugInfo = function (context, ctx, lineSeparator) {
+},{"./node":70}],54:[function(require,module,exports){
+var debugInfo = function(context, ctx, lineSeparator) {
     var result = "";
     if (context.dumpLineNumbers && !context.compress) {
         switch(context.dumpLineNumbers) {
@@ -5940,11 +5940,11 @@ var debugInfo = function (context, ctx, lineSeparator) {
     return result;
 };
 
-debugInfo.asComment = function (ctx) {
+debugInfo.asComment = function(ctx) {
     return '/* line ' + ctx.debugInfo.lineNumber + ', ' + ctx.debugInfo.fileName + ' */\n';
 };
 
-debugInfo.asMediaQuery = function (ctx) {
+debugInfo.asMediaQuery = function(ctx) {
     var filenameWithProtocol = ctx.debugInfo.fileName;
     if (!/^[a-z]+:\/\//i.test(filenameWithProtocol)) {
         filenameWithProtocol = 'file://' + filenameWithProtocol;
@@ -5961,7 +5961,7 @@ debugInfo.asMediaQuery = function (ctx) {
 
 module.exports = debugInfo;
 
-},{}],55:[function (require,module,exports){
+},{}],55:[function(require,module,exports){
 var Node = require("./node"),
     contexts = require("../contexts");
 
@@ -5984,7 +5984,7 @@ DetachedRuleset.prototype.callEval = function (context) {
 };
 module.exports = DetachedRuleset;
 
-},{"../contexts":11,"./node":70}],56:[function (require,module,exports){
+},{"../contexts":11,"./node":70}],56:[function(require,module,exports){
 var Node = require("./node"),
     unitConversions = require("../data/unit-conversions"),
     Unit = require("./unit"),
@@ -6143,7 +6143,7 @@ Dimension.prototype.convertTo = function (conversions) {
 };
 module.exports = Dimension;
 
-},{"../data/unit-conversions":14,"./color":50,"./node":70,"./unit":79}],57:[function (require,module,exports){
+},{"../data/unit-conversions":14,"./color":50,"./node":70,"./unit":79}],57:[function(require,module,exports){
 var Node = require("./node"),
     Selector = require("./selector"),
     Ruleset = require("./ruleset");
@@ -6183,10 +6183,10 @@ Directive.prototype.accept = function (visitor) {
         this.value = visitor.visit(value);
     }
 };
-Directive.prototype.isRulesetLike = function () {
+Directive.prototype.isRulesetLike = function() {
     return this.rules || !this.isCharset();
 };
-Directive.prototype.isCharset = function () {
+Directive.prototype.isCharset = function() {
     return "@charset" === this.name;
 };
 Directive.prototype.genCSS = function (context, output) {
@@ -6279,7 +6279,7 @@ Directive.prototype.outputRuleset = function (context, output, rules) {
 };
 module.exports = Directive;
 
-},{"./node":70,"./ruleset":76,"./selector":77}],58:[function (require,module,exports){
+},{"./node":70,"./ruleset":76,"./selector":77}],58:[function(require,module,exports){
 var Node = require("./node"),
     Paren = require("./paren"),
     Combinator = require("./combinator");
@@ -6341,7 +6341,7 @@ Element.prototype.toCSS = function (context) {
 };
 module.exports = Element;
 
-},{"./combinator":51,"./node":70,"./paren":72}],59:[function (require,module,exports){
+},{"./combinator":51,"./node":70,"./paren":72}],59:[function(require,module,exports){
 var Node = require("./node"),
     Paren = require("./paren"),
     Comment = require("./comment");
@@ -6393,13 +6393,13 @@ Expression.prototype.genCSS = function (context, output) {
     }
 };
 Expression.prototype.throwAwayComments = function () {
-    this.value = this.value.filter(function (v) {
+    this.value = this.value.filter(function(v) {
         return !(v instanceof Comment);
     });
 };
 module.exports = Expression;
 
-},{"./comment":52,"./node":70,"./paren":72}],60:[function (require,module,exports){
+},{"./comment":52,"./node":70,"./paren":72}],60:[function(require,module,exports){
 var Node = require("./node"),
     Selector = require("./selector");
 
@@ -6458,7 +6458,7 @@ Extend.prototype.findSelfSelectors = function (selectors) {
 };
 module.exports = Extend;
 
-},{"./node":70,"./selector":77}],61:[function (require,module,exports){
+},{"./node":70,"./selector":77}],61:[function(require,module,exports){
 var Node = require("./node"),
     Media = require("./media"),
     URL = require("./url"),
@@ -6626,7 +6626,7 @@ Import.prototype.doEval = function (context) {
 };
 module.exports = Import;
 
-},{"./anonymous":46,"./media":66,"./node":70,"./quoted":73,"./ruleset":76,"./url":80}],62:[function (require,module,exports){
+},{"./anonymous":46,"./media":66,"./node":70,"./quoted":73,"./ruleset":76,"./url":80}],62:[function(require,module,exports){
 var tree = {};
 
 tree.Node = require('./node');
@@ -6669,7 +6669,7 @@ tree.RulesetCall = require('./ruleset-call');
 
 module.exports = tree;
 
-},{"./alpha":45,"./anonymous":46,"./assignment":47,"./attribute":48,"./call":49,"./color":50,"./combinator":51,"./comment":52,"./condition":53,"./detached-ruleset":55,"./dimension":56,"./directive":57,"./element":58,"./expression":59,"./extend":60,"./import":61,"./javascript":63,"./keyword":65,"./media":66,"./mixin-call":67,"./mixin-definition":68,"./negative":69,"./node":70,"./operation":71,"./paren":72,"./quoted":73,"./rule":74,"./ruleset":76,"./ruleset-call":75,"./selector":77,"./unicode-descriptor":78,"./unit":79,"./url":80,"./value":81,"./variable":82}],63:[function (require,module,exports){
+},{"./alpha":45,"./anonymous":46,"./assignment":47,"./attribute":48,"./call":49,"./color":50,"./combinator":51,"./comment":52,"./condition":53,"./detached-ruleset":55,"./dimension":56,"./directive":57,"./element":58,"./expression":59,"./extend":60,"./import":61,"./javascript":63,"./keyword":65,"./media":66,"./mixin-call":67,"./mixin-definition":68,"./negative":69,"./node":70,"./operation":71,"./paren":72,"./quoted":73,"./rule":74,"./ruleset":76,"./ruleset-call":75,"./selector":77,"./unicode-descriptor":78,"./unit":79,"./url":80,"./value":81,"./variable":82}],63:[function(require,module,exports){
 var JsEvalNode = require("./js-eval-node"),
     Dimension = require("./dimension"),
     Quoted = require("./quoted"),
@@ -6683,7 +6683,7 @@ var JavaScript = function (string, escaped, index, currentFileInfo) {
 };
 JavaScript.prototype = new JsEvalNode();
 JavaScript.prototype.type = "JavaScript";
-JavaScript.prototype.eval = function (context) {
+JavaScript.prototype.eval = function(context) {
     var result = this.evaluateJavaScript(this.expression, context);
 
     if (typeof result === 'number') {
@@ -6699,11 +6699,11 @@ JavaScript.prototype.eval = function (context) {
 
 module.exports = JavaScript;
 
-},{"./anonymous":46,"./dimension":56,"./js-eval-node":64,"./quoted":73}],64:[function (require,module,exports){
+},{"./anonymous":46,"./dimension":56,"./js-eval-node":64,"./quoted":73}],64:[function(require,module,exports){
 var Node = require("./node"),
     Variable = require("./variable");
 
-var JsEvalNode = function () {
+var JsEvalNode = function() {
 };
 JsEvalNode.prototype = new Node();
 
@@ -6723,7 +6723,7 @@ JsEvalNode.prototype.evaluateJavaScript = function (expression, context) {
     });
 
     try {
-        expression = new function ('return (' + expression + ')');
+        expression = new Function('return (' + expression + ')');
     } catch (e) {
         throw { message: "JavaScript evaluation error: " + e.message + " from `" + expression + "`" ,
             filename: this.currentFileInfo.filename,
@@ -6762,7 +6762,7 @@ JsEvalNode.prototype.jsify = function (obj) {
 
 module.exports = JsEvalNode;
 
-},{"./node":70,"./variable":82}],65:[function (require,module,exports){
+},{"./node":70,"./variable":82}],65:[function(require,module,exports){
 var Node = require("./node");
 
 var Keyword = function (value) { this.value = value; };
@@ -6778,7 +6778,7 @@ Keyword.False = new Keyword('false');
 
 module.exports = Keyword;
 
-},{"./node":70}],66:[function (require,module,exports){
+},{"./node":70}],66:[function(require,module,exports){
 var Ruleset = require("./ruleset"),
     Value = require("./value"),
     Selector = require("./selector"),
@@ -6925,7 +6925,7 @@ Media.prototype.bubbleSelectors = function (selectors) {
 };
 module.exports = Media;
 
-},{"./anonymous":46,"./directive":57,"./expression":59,"./ruleset":76,"./selector":77,"./value":81}],67:[function (require,module,exports){
+},{"./anonymous":46,"./directive":57,"./expression":59,"./ruleset":76,"./selector":77,"./value":81}],67:[function(require,module,exports){
 var Node = require("./node"),
     Selector = require("./selector"),
     MixinDefinition = require("./mixin-definition"),
@@ -6995,7 +6995,7 @@ MixinCall.prototype.eval = function (context) {
         }
     }
 
-    noArgumentsFilter = function (rule) {return rule.matchArgs(null, context);};
+    noArgumentsFilter = function(rule) {return rule.matchArgs(null, context);};
 
     for (i = 0; i < context.frames.length; i++) {
         if ((mixins = context.frames[i].find(this.selector, null, noArgumentsFilter)).length > 0) {
@@ -7110,7 +7110,7 @@ MixinCall.prototype.format = function (args) {
 };
 module.exports = MixinCall;
 
-},{"../functions/default":20,"./mixin-definition":68,"./node":70,"./selector":77}],68:[function (require,module,exports){
+},{"../functions/default":20,"./mixin-definition":68,"./node":70,"./selector":77}],68:[function(require,module,exports){
 var Selector = require("./selector"),
     Element = require("./element"),
     Ruleset = require("./ruleset"),
@@ -7233,7 +7233,7 @@ Definition.prototype.evalParams = function (context, mixinEnv, args, evaldArgume
 
     return frame;
 };
-Definition.prototype.makeImportant = function () {
+Definition.prototype.makeImportant = function() {
     var rules = !this.rules ? this.rules : this.rules.map(function (r) {
         if (r.makeImportant) {
             return r.makeImportant(true);
@@ -7313,7 +7313,7 @@ Definition.prototype.matchArgs = function (args, context) {
 };
 module.exports = Definition;
 
-},{"../contexts":11,"./element":58,"./expression":59,"./rule":74,"./ruleset":76,"./selector":77}],69:[function (require,module,exports){
+},{"../contexts":11,"./element":58,"./expression":59,"./rule":74,"./ruleset":76,"./selector":77}],69:[function(require,module,exports){
 var Node = require("./node"),
     Operation = require("./operation"),
     Dimension = require("./dimension");
@@ -7335,13 +7335,13 @@ Negative.prototype.eval = function (context) {
 };
 module.exports = Negative;
 
-},{"./dimension":56,"./node":70,"./operation":71}],70:[function (require,module,exports){
-var Node = function () {
+},{"./dimension":56,"./node":70,"./operation":71}],70:[function(require,module,exports){
+var Node = function() {
 };
 Node.prototype.toCSS = function (context) {
     var strs = [];
     this.genCSS(context, {
-        add: function (chunk, fileInfo, index) {
+        add: function(chunk, fileInfo, index) {
             strs.push(chunk);
         },
         isEmpty: function () {
@@ -7365,7 +7365,7 @@ Node.prototype._operate = function (context, op, a, b) {
         case '/': return a / b;
     }
 };
-Node.prototype.fround = function (context, value) {
+Node.prototype.fround = function(context, value) {
     var precision = context && context.numPrecision;
     //add "epsilon" to ensure numbers like 1.000000005 (represented as 1.000000004999....) are properly rounded...
     return (precision == null) ? value : Number((value + 2e-16).toFixed(precision));
@@ -7445,13 +7445,13 @@ Node.prototype.ensureInvisibility = function () {
 Node.prototype.isVisible = function () {
     return this.nodeVisible;
 };
-Node.prototype.visibilityInfo = function () {
+Node.prototype.visibilityInfo = function() {
     return {
         visibilityBlocks: this.visibilityBlocks,
         nodeVisible: this.nodeVisible
     };
 };
-Node.prototype.copyVisibilityInfo = function (info) {
+Node.prototype.copyVisibilityInfo = function(info) {
     if (!info) {
         return;
     }
@@ -7460,7 +7460,7 @@ Node.prototype.copyVisibilityInfo = function (info) {
 };
 module.exports = Node;
 
-},{}],71:[function (require,module,exports){
+},{}],71:[function(require,module,exports){
 var Node = require("./node"),
     Color = require("./color"),
     Dimension = require("./dimension");
@@ -7510,7 +7510,7 @@ Operation.prototype.genCSS = function (context, output) {
 
 module.exports = Operation;
 
-},{"./color":50,"./dimension":56,"./node":70}],72:[function (require,module,exports){
+},{"./color":50,"./dimension":56,"./node":70}],72:[function(require,module,exports){
 var Node = require("./node");
 
 var Paren = function (node) {
@@ -7528,7 +7528,7 @@ Paren.prototype.eval = function (context) {
 };
 module.exports = Paren;
 
-},{"./node":70}],73:[function (require,module,exports){
+},{"./node":70}],73:[function(require,module,exports){
 var Node = require("./node"),
     JsEvalNode = require("./js-eval-node"),
     Variable = require("./variable");
@@ -7551,7 +7551,7 @@ Quoted.prototype.genCSS = function (context, output) {
         output.add(this.quote);
     }
 };
-Quoted.prototype.containsVariables = function () {
+Quoted.prototype.containsVariables = function() {
     return this.value.match(/(`([^`]+)`)|@\{([\w-]+)\}/);
 };
 Quoted.prototype.eval = function (context) {
@@ -7585,7 +7585,7 @@ Quoted.prototype.compare = function (other) {
 };
 module.exports = Quoted;
 
-},{"./js-eval-node":64,"./node":70,"./variable":82}],74:[function (require,module,exports){
+},{"./js-eval-node":64,"./node":70,"./variable":82}],74:[function(require,module,exports){
 var Node = require("./node"),
     Value = require("./value"),
     Keyword = require("./keyword");
@@ -7682,7 +7682,7 @@ Rule.prototype.makeImportant = function () {
 };
 
 module.exports = Rule;
-},{"./keyword":65,"./node":70,"./value":81}],75:[function (require,module,exports){
+},{"./keyword":65,"./node":70,"./value":81}],75:[function(require,module,exports){
 var Node = require("./node"),
     Variable = require("./variable");
 
@@ -7698,7 +7698,7 @@ RulesetCall.prototype.eval = function (context) {
 };
 module.exports = RulesetCall;
 
-},{"./node":70,"./variable":82}],76:[function (require,module,exports){
+},{"./node":70,"./variable":82}],76:[function(require,module,exports){
 var Node = require("./node"),
     Rule = require("./rule"),
     Selector = require("./selector"),
@@ -7814,7 +7814,7 @@ Ruleset.prototype.eval = function (context) {
     for (i = 0; i < rsRuleCnt; i++) {
         if (rsRules[i].type === "MixinCall") {
             /*jshint loopfunc:true */
-            rules = rsRules[i].eval(context).filter(function (r) {
+            rules = rsRules[i].eval(context).filter(function(r) {
                 if ((r instanceof Rule) && r.variable) {
                     // do not pollute the scope if the variable is
                     // already there. consider returning false here
@@ -7829,7 +7829,7 @@ Ruleset.prototype.eval = function (context) {
             ruleset.resetCache();
         } else if (rsRules[i].type === "RulesetCall") {
             /*jshint loopfunc:true */
-            rules = rsRules[i].eval(context).rules.filter(function (r) {
+            rules = rsRules[i].eval(context).rules.filter(function(r) {
                 if ((r instanceof Rule) && r.variable) {
                     // do not pollute the scope at all
                     return false;
@@ -7883,7 +7883,7 @@ Ruleset.prototype.eval = function (context) {
 
     return ruleset;
 };
-Ruleset.prototype.evalImports = function (context) {
+Ruleset.prototype.evalImports = function(context) {
     var rules = this.rules, i, importRules;
     if (!rules) { return; }
 
@@ -7900,7 +7900,7 @@ Ruleset.prototype.evalImports = function (context) {
         }
     }
 };
-Ruleset.prototype.makeImportant = function () {
+Ruleset.prototype.makeImportant = function() {
     var result = new Ruleset(this.selectors, this.rules.map(function (r) {
         if (r.makeImportant) {
             return r.makeImportant();
@@ -8387,7 +8387,7 @@ Ruleset.prototype.joinSelector = function (paths, context, selector) {
             newPaths = [];
             for (i = 0; i < context.length; i++) {
                 //var concatenated = [];
-                //context[i].forEach(function (entry) {
+                //context[i].forEach(function(entry) {
                 //    var newEntry = entry.createDerived(entry.elements, entry.extendList, entry.evaldCondition);
                 //    newEntry.copyVisibilityInfo(selector.visibilityInfo());
                 //    concatenated.push(newEntry);
@@ -8410,7 +8410,7 @@ Ruleset.prototype.joinSelector = function (paths, context, selector) {
 };
 module.exports = Ruleset;
 
-},{"../contexts":11,"../functions/default":20,"../functions/function-registry":22,"./debug-info":54,"./element":58,"./node":70,"./paren":72,"./rule":74,"./selector":77}],77:[function (require,module,exports){
+},{"../contexts":11,"../functions/default":20,"../functions/function-registry":22,"./debug-info":54,"./element":58,"./node":70,"./paren":72,"./rule":74,"./selector":77}],77:[function(require,module,exports){
 var Node = require("./node"),
     Element = require("./element");
 
@@ -8437,7 +8437,7 @@ Selector.prototype.accept = function (visitor) {
         this.condition = visitor.visit(this.condition);
     }
 };
-Selector.prototype.createDerived = function (elements, extendList, evaldCondition) {
+Selector.prototype.createDerived = function(elements, extendList, evaldCondition) {
     var info = this.visibilityInfo();
     evaldCondition = (evaldCondition != null) ? evaldCondition : this.evaldCondition;
     var newSelector = new Selector(elements, extendList || this.extendList, null, this.index, this.currentFileInfo, info);
@@ -8445,7 +8445,7 @@ Selector.prototype.createDerived = function (elements, extendList, evaldConditio
     newSelector.mediaEmpty = this.mediaEmpty;
     return newSelector;
 };
-Selector.prototype.createEmptySelectors = function () {
+Selector.prototype.createEmptySelectors = function() {
     var el = new Element('', '&', this.index, this.currentFileInfo),
         sels = [new Selector([el], null, null, this.index, this.currentFileInfo)];
     sels[0].mediaEmpty = true;
@@ -8471,12 +8471,12 @@ Selector.prototype.match = function (other) {
 
     return olen; // return number of matched elements
 };
-Selector.prototype.CacheElements = function () {
+Selector.prototype.CacheElements = function() {
     if (this._elements) {
         return;
     }
 
-    var elements = this.elements.map( function (v) {
+    var elements = this.elements.map( function(v) {
         return v.combinator.value + (v.value.value || v.value);
     }).join("").match(/[,&#\*\.\w-]([\w-]|(\\.))*/g);
 
@@ -8490,7 +8490,7 @@ Selector.prototype.CacheElements = function () {
 
     this._elements = elements;
 };
-Selector.prototype.isJustParentSelector = function () {
+Selector.prototype.isJustParentSelector = function() {
     return !this.mediaEmpty &&
         this.elements.length === 1 &&
         this.elements[0].value === '&' &&
@@ -8501,7 +8501,7 @@ Selector.prototype.eval = function (context) {
         elements = this.elements, extendList = this.extendList;
 
     elements = elements && elements.map(function (e) { return e.eval(context); });
-    extendList = extendList && extendList.map(function (extend) { return extend.eval(context); });
+    extendList = extendList && extendList.map(function(extend) { return extend.eval(context); });
 
     return this.createDerived(elements, extendList, evaldCondition);
 };
@@ -8518,12 +8518,12 @@ Selector.prototype.genCSS = function (context, output) {
         }
     }
 };
-Selector.prototype.getIsOutput = function () {
+Selector.prototype.getIsOutput = function() {
     return this.evaldCondition;
 };
 module.exports = Selector;
 
-},{"./element":58,"./node":70}],78:[function (require,module,exports){
+},{"./element":58,"./node":70}],78:[function(require,module,exports){
 var Node = require("./node");
 
 var UnicodeDescriptor = function (value) {
@@ -8534,7 +8534,7 @@ UnicodeDescriptor.prototype.type = "UnicodeDescriptor";
 
 module.exports = UnicodeDescriptor;
 
-},{"./node":70}],79:[function (require,module,exports){
+},{"./node":70}],79:[function(require,module,exports){
 var Node = require("./node"),
     unitConversions = require("../data/unit-conversions");
 
@@ -8583,10 +8583,10 @@ Unit.prototype.isLength = function () {
 Unit.prototype.isEmpty = function () {
     return this.numerator.length === 0 && this.denominator.length === 0;
 };
-Unit.prototype.isSingular = function () {
+Unit.prototype.isSingular = function() {
     return this.numerator.length <= 1 && this.denominator.length === 0;
 };
-Unit.prototype.map = function (callback) {
+Unit.prototype.map = function(callback) {
     var i;
 
     for (i = 0; i < this.numerator.length; i++) {
@@ -8597,7 +8597,7 @@ Unit.prototype.map = function (callback) {
         this.denominator[i] = callback(this.denominator[i], true);
     }
 };
-Unit.prototype.usedUnits = function () {
+Unit.prototype.usedUnits = function() {
     var group, result = {}, mapUnit, groupName;
 
     mapUnit = function (atomicUnit) {
@@ -8656,7 +8656,7 @@ Unit.prototype.cancel = function () {
 };
 module.exports = Unit;
 
-},{"../data/unit-conversions":14,"./node":70}],80:[function (require,module,exports){
+},{"../data/unit-conversions":14,"./node":70}],80:[function(require,module,exports){
 var Node = require("./node");
 
 var URL = function (val, index, currentFileInfo, isEvald) {
@@ -8687,7 +8687,7 @@ URL.prototype.eval = function (context) {
             context.isPathRelative(val.value)) {
 
             if (!val.quote) {
-                rootpath = rootpath.replace(/[\(\)'"\s]/g, function (match) { return "\\" + match; });
+                rootpath = rootpath.replace(/[\(\)'"\s]/g, function(match) { return "\\" + match; });
             }
             val.value = rootpath + val.value;
         }
@@ -8712,7 +8712,7 @@ URL.prototype.eval = function (context) {
 };
 module.exports = URL;
 
-},{"./node":70}],81:[function (require,module,exports){
+},{"./node":70}],81:[function(require,module,exports){
 var Node = require("./node");
 
 var Value = function (value) {
@@ -8748,7 +8748,7 @@ Value.prototype.genCSS = function (context, output) {
 };
 module.exports = Value;
 
-},{"./node":70}],82:[function (require,module,exports){
+},{"./node":70}],82:[function(require,module,exports){
 var Node = require("./node");
 
 var Variable = function (name, index, currentFileInfo) {
@@ -8803,9 +8803,9 @@ Variable.prototype.find = function (obj, fun) {
 };
 module.exports = Variable;
 
-},{"./node":70}],83:[function (require,module,exports){
+},{"./node":70}],83:[function(require,module,exports){
 module.exports = {
-    getLocation: function (index, inputStream) {
+    getLocation: function(index, inputStream) {
         var n = index + 1,
             line = null,
             column = -1;
@@ -8825,14 +8825,14 @@ module.exports = {
     }
 };
 
-},{}],84:[function (require,module,exports){
+},{}],84:[function(require,module,exports){
 var tree = require("../tree"),
     Visitor = require("./visitor"),
     logger = require("../logger");
 
 /*jshint loopfunc:true */
 
-var ExtendFinderVisitor = function () {
+var ExtendFinderVisitor = function() {
     this._visitor = new Visitor(this);
     this.contexts = [];
     this.allExtendsStack = [[]];
@@ -8878,7 +8878,7 @@ ExtendFinderVisitor.prototype = {
                                        : allSelectorsExtendList;
 
             if (extendList) {
-                extendList = extendList.map(function (allSelectorsExtend) {
+                extendList = extendList.map(function(allSelectorsExtend) {
                     return allSelectorsExtend.clone();
                 });
             }
@@ -8916,12 +8916,12 @@ ExtendFinderVisitor.prototype = {
     }
 };
 
-var ProcessExtendsVisitor = function () {
+var ProcessExtendsVisitor = function() {
     this._visitor = new Visitor(this);
 };
 
 ProcessExtendsVisitor.prototype = {
-    run: function (root) {
+    run: function(root) {
         var extendFinder = new ExtendFinderVisitor();
         this.extendIndices = {};
         extendFinder.run(root);
@@ -8932,11 +8932,11 @@ ProcessExtendsVisitor.prototype = {
         this.checkExtendsForNonMatched(root.allExtends);
         return newRoot;
     },
-    checkExtendsForNonMatched: function (extendList) {
+    checkExtendsForNonMatched: function(extendList) {
         var indices = this.extendIndices;
-        extendList.filter(function (extend) {
+        extendList.filter(function(extend) {
             return !extend.hasFoundMatches && extend.parent_ids.length == 1;
-        }).forEach(function (extend) {
+        }).forEach(function(extend) {
                 var selector = "_unknown_";
                 try {
                     selector = extend.selector.toCSS({});
@@ -8987,7 +8987,7 @@ ProcessExtendsVisitor.prototype = {
                     extend.hasFoundMatches = true;
 
                     // we found a match, so for each self selector..
-                    extend.selfSelectors.forEach(function (selfSelector) {
+                    extend.selfSelectors.forEach(function(selfSelector) {
                         var info = targetExtend.visibilityInfo();
 
                         // process the extend as usual
@@ -9074,7 +9074,7 @@ ProcessExtendsVisitor.prototype = {
                 if (matches.length) {
                     allExtends[extendIndex].hasFoundMatches = true;
 
-                    allExtends[extendIndex].selfSelectors.forEach(function (selfSelector) {
+                    allExtends[extendIndex].selfSelectors.forEach(function(selfSelector) {
                         var extendedSelectors;
                         extendedSelectors = extendVisitor.extendSelector(matches, selectorPath, selfSelector, allExtends[extendIndex].isVisible());
                         selectorsToAdd.push(extendedSelectors);
@@ -9155,7 +9155,7 @@ ProcessExtendsVisitor.prototype = {
         }
         return matches;
     },
-    isElementValuesEqual: function (elementValue1, elementValue2) {
+    isElementValuesEqual: function(elementValue1, elementValue2) {
         if (typeof elementValue1 === "string" || typeof elementValue2 === "string") {
             return elementValue1 === elementValue2;
         }
@@ -9287,7 +9287,7 @@ ProcessExtendsVisitor.prototype = {
 
 module.exports = ProcessExtendsVisitor;
 
-},{"../logger":33,"../tree":62,"./visitor":91}],85:[function (require,module,exports){
+},{"../logger":33,"../tree":62,"./visitor":91}],85:[function(require,module,exports){
 function ImportSequencer(onSequencerEmpty) {
     this.imports = [];
     this.variableImports = [];
@@ -9295,7 +9295,7 @@ function ImportSequencer(onSequencerEmpty) {
     this._currentDepth = 0;
 }
 
-ImportSequencer.prototype.addImport = function (callback) {
+ImportSequencer.prototype.addImport = function(callback) {
     var importSequencer = this,
         importItem = {
             callback: callback,
@@ -9303,18 +9303,18 @@ ImportSequencer.prototype.addImport = function (callback) {
             isReady: false
         };
     this.imports.push(importItem);
-    return function () {
+    return function() {
         importItem.args = Array.prototype.slice.call(arguments, 0);
         importItem.isReady = true;
         importSequencer.tryRun();
     };
 };
 
-ImportSequencer.prototype.addVariableImport = function (callback) {
+ImportSequencer.prototype.addVariableImport = function(callback) {
     this.variableImports.push(callback);
 };
 
-ImportSequencer.prototype.tryRun = function () {
+ImportSequencer.prototype.tryRun = function() {
     this._currentDepth++;
     try {
         while (true) {
@@ -9343,12 +9343,12 @@ ImportSequencer.prototype.tryRun = function () {
 
 module.exports = ImportSequencer;
 
-},{}],86:[function (require,module,exports){
+},{}],86:[function(require,module,exports){
 var contexts = require("../contexts"),
     Visitor = require("./visitor"),
     ImportSequencer = require("./import-sequencer");
 
-var ImportVisitor = function (importer, finish) {
+var ImportVisitor = function(importer, finish) {
 
     this._visitor = new Visitor(this);
     this._importer = importer;
@@ -9374,7 +9374,7 @@ ImportVisitor.prototype = {
         this.isFinished = true;
         this._sequencer.tryRun();
     },
-    _onSequencerEmpty: function () {
+    _onSequencerEmpty: function() {
         if (!this.isFinished) {
             return;
         }
@@ -9397,7 +9397,7 @@ ImportVisitor.prototype = {
         }
         visitArgs.visitDeeper = false;
     },
-    processImportNode: function (importNode, context, importParent) {
+    processImportNode: function(importNode, context, importParent) {
         var evaldImportNode,
             inlineCSS = importNode.options.inline;
 
@@ -9457,7 +9457,7 @@ ImportVisitor.prototype = {
             if (duplicateImport) {
                 importNode.skip = true;
             } else {
-                importNode.skip = function () {
+                importNode.skip = function() {
                     if (fullPath in importVisitor.onceFileDetectionMap) {
                         return true;
                     }
@@ -9502,7 +9502,7 @@ ImportVisitor.prototype = {
             visitArgs.visitDeeper = false;
         }
     },
-    visitRuleOut : function (ruleNode) {
+    visitRuleOut : function(ruleNode) {
         if (ruleNode.value.type === "DetachedRuleset") {
             this.context.frames.shift();
         }
@@ -9534,7 +9534,7 @@ ImportVisitor.prototype = {
 };
 module.exports = ImportVisitor;
 
-},{"../contexts":11,"./import-sequencer":85,"./visitor":91}],87:[function (require,module,exports){
+},{"../contexts":11,"./import-sequencer":85,"./visitor":91}],87:[function(require,module,exports){
 var visitors = {
     Visitor: require("./visitor"),
     ImportVisitor: require('./import-visitor'),
@@ -9546,10 +9546,10 @@ var visitors = {
 
 module.exports = visitors;
 
-},{"./extend-visitor":84,"./import-visitor":86,"./join-selector-visitor":88,"./set-tree-visibility-visitor":89,"./to-css-visitor":90,"./visitor":91}],88:[function (require,module,exports){
+},{"./extend-visitor":84,"./import-visitor":86,"./join-selector-visitor":88,"./set-tree-visibility-visitor":89,"./to-css-visitor":90,"./visitor":91}],88:[function(require,module,exports){
 var Visitor = require("./visitor");
 
-var JoinSelectorVisitor = function () {
+var JoinSelectorVisitor = function() {
     this.contexts = [[]];
     this._visitor = new Visitor(this);
 };
@@ -9574,7 +9574,7 @@ JoinSelectorVisitor.prototype = {
         if (! rulesetNode.root) {
             selectors = rulesetNode.selectors;
             if (selectors) {
-                selectors = selectors.filter(function (selector) { return selector.getIsOutput(); });
+                selectors = selectors.filter(function(selector) { return selector.getIsOutput(); });
                 rulesetNode.selectors = selectors.length ? selectors : (selectors = null);
                 if (selectors) { rulesetNode.joinSelectors(paths, context, selectors); }
             }
@@ -9599,14 +9599,14 @@ JoinSelectorVisitor.prototype = {
 
 module.exports = JoinSelectorVisitor;
 
-},{"./visitor":91}],89:[function (require,module,exports){
-var SetTreeVisibilityVisitor = function (visible) {
+},{"./visitor":91}],89:[function(require,module,exports){
+var SetTreeVisibilityVisitor = function(visible) {
     this.visible = visible;
 };
-SetTreeVisibilityVisitor.prototype.run = function (root) {
+SetTreeVisibilityVisitor.prototype.run = function(root) {
     this.visit(root);
 };
-SetTreeVisibilityVisitor.prototype.visitArray = function (nodes) {
+SetTreeVisibilityVisitor.prototype.visitArray = function(nodes) {
     if (!nodes) {
         return nodes;
     }
@@ -9617,7 +9617,7 @@ SetTreeVisibilityVisitor.prototype.visitArray = function (nodes) {
     }
     return nodes;
 };
-SetTreeVisibilityVisitor.prototype.visit = function (node) {
+SetTreeVisibilityVisitor.prototype.visit = function(node) {
     if (!node) {
         return node;
     }
@@ -9638,17 +9638,17 @@ SetTreeVisibilityVisitor.prototype.visit = function (node) {
     return node;
 };
 module.exports = SetTreeVisibilityVisitor;
-},{}],90:[function (require,module,exports){
+},{}],90:[function(require,module,exports){
 var tree = require("../tree"),
     Visitor = require("./visitor");
 
-var CSSVisitorUtils = function (context) {
+var CSSVisitorUtils = function(context) {
     this._visitor = new Visitor(this);
     this._context = context;
 };
 
 CSSVisitorUtils.prototype = {
-    containsSilentNonBlockedChild: function (bodyRules) {
+    containsSilentNonBlockedChild: function(bodyRules) {
         var rule;
         if (bodyRules == null) {
             return false;
@@ -9664,25 +9664,25 @@ CSSVisitorUtils.prototype = {
         return false;
     },
 
-    keepOnlyVisibleChilds: function (owner) {
+    keepOnlyVisibleChilds: function(owner) {
         if (owner == null || owner.rules == null) {
             return ;
         }
 
-        owner.rules = owner.rules.filter(function (thing) {
+        owner.rules = owner.rules.filter(function(thing) {
                 return thing.isVisible();
             }
         );
     },
 
-    isEmpty: function (owner) {
+    isEmpty: function(owner) {
         if (owner == null || owner.rules == null) {
             return true;
         }
         return owner.rules.length === 0;
     },
 
-    hasVisibleSelector: function (rulesetNode) {
+    hasVisibleSelector: function(rulesetNode) {
         if (rulesetNode == null || rulesetNode.paths == null) {
             return false;
         }
@@ -9711,7 +9711,7 @@ CSSVisitorUtils.prototype = {
         return node;
     },
 
-    isVisibleRuleset: function (rulesetNode) {
+    isVisibleRuleset: function(rulesetNode) {
         if (rulesetNode.firstRoot) {
             return true;
         }
@@ -9729,7 +9729,7 @@ CSSVisitorUtils.prototype = {
 
 };
 
-var ToCSSVisitor = function (context) {
+var ToCSSVisitor = function(context) {
     this._visitor = new Visitor(this);
     this._context = context;
     this.utils = new CSSVisitorUtils(context);
@@ -9764,7 +9764,7 @@ ToCSSVisitor.prototype = {
         return commentNode;
     },
 
-    visitMedia: function (mediaNode, visitArgs) {
+    visitMedia: function(mediaNode, visitArgs) {
         var originalRules = mediaNode.rules[0].rules;
         mediaNode.accept(this._visitor);
         visitArgs.visitDeeper = false;
@@ -9779,7 +9779,7 @@ ToCSSVisitor.prototype = {
         return importNode;
     },
 
-    visitDirective: function (directiveNode, visitArgs) {
+    visitDirective: function(directiveNode, visitArgs) {
         if (directiveNode.rules && directiveNode.rules.length) {
             return this.visitDirectiveWithBody(directiveNode, visitArgs);
         } else {
@@ -9787,7 +9787,7 @@ ToCSSVisitor.prototype = {
         }
     },
 
-    visitDirectiveWithBody: function (directiveNode, visitArgs) {
+    visitDirectiveWithBody: function(directiveNode, visitArgs) {
         //if there is only one nested ruleset and that one has no path, then it is
         //just fake ruleset
         function hasFakeRuleset(directiveNode) {
@@ -9816,7 +9816,7 @@ ToCSSVisitor.prototype = {
         return this.utils.resolveVisibility(directiveNode, originalRules);
     },
 
-    visitDirectiveWithoutBody: function (directiveNode, visitArgs) {
+    visitDirectiveWithoutBody: function(directiveNode, visitArgs) {
         if (directiveNode.blocksVisibility()) {
             return;
         }
@@ -9839,7 +9839,7 @@ ToCSSVisitor.prototype = {
         return directiveNode;
     },
 
-    checkValidNodes: function (rules, isRoot) {
+    checkValidNodes: function(rules, isRoot) {
         if (!rules) {
             return;
         }
@@ -9916,10 +9916,10 @@ ToCSSVisitor.prototype = {
         return rulesets;
     },
 
-    _compileRulesetPaths: function (rulesetNode) {
+    _compileRulesetPaths: function(rulesetNode) {
         if (rulesetNode.paths) {
             rulesetNode.paths = rulesetNode.paths
-                .filter(function (p) {
+                .filter(function(p) {
                     var i;
                     if (p[0].elements[0].combinator.value === ' ') {
                         p[0].elements[0].combinator = new(tree.Combinator)('');
@@ -9934,7 +9934,7 @@ ToCSSVisitor.prototype = {
         }
     },
 
-    _removeDuplicateRules: function (rules) {
+    _removeDuplicateRules: function(rules) {
         if (!rules) { return; }
 
         // remove duplicates
@@ -10022,7 +10022,7 @@ ToCSSVisitor.prototype = {
         });
     },
 
-    visitAnonymous: function (anonymousNode, visitArgs) {
+    visitAnonymous: function(anonymousNode, visitArgs) {
         if (anonymousNode.blocksVisibility()) {
             return ;
         }
@@ -10033,7 +10033,7 @@ ToCSSVisitor.prototype = {
 
 module.exports = ToCSSVisitor;
 
-},{"../tree":62,"./visitor":91}],91:[function (require,module,exports){
+},{"../tree":62,"./visitor":91}],91:[function(require,module,exports){
 var tree = require("../tree");
 
 var _visitArgs = { visitDeeper: true },
@@ -10066,7 +10066,7 @@ function indexNodeTypes(parent, ticker) {
     return ticker;
 }
 
-var Visitor = function (implementation) {
+var Visitor = function(implementation) {
     this._implementation = implementation;
     this._visitFnCache = [];
 
@@ -10077,7 +10077,7 @@ var Visitor = function (implementation) {
 };
 
 Visitor.prototype = {
-    visit: function (node) {
+    visit: function(node) {
         if (!node) {
             return node;
         }
@@ -10123,7 +10123,7 @@ Visitor.prototype = {
 
         return node;
     },
-    visitArray: function (nodes, nonReplacing) {
+    visitArray: function(nodes, nonReplacing) {
         if (!nodes) {
             return nodes;
         }
@@ -10151,7 +10151,7 @@ Visitor.prototype = {
         }
         return out;
     },
-    flatten: function (arr, out) {
+    flatten: function(arr, out) {
         if (!out) {
             out = [];
         }
@@ -10187,7 +10187,7 @@ Visitor.prototype = {
 };
 module.exports = Visitor;
 
-},{"../tree":62}],92:[function (require,module,exports){
+},{"../tree":62}],92:[function(require,module,exports){
 "use strict";
 
 // rawAsap provides everything we need except exception management.
@@ -10255,7 +10255,7 @@ RawTask.prototype.call = function () {
     }
 };
 
-},{"./raw":93}],93:[function (require,module,exports){
+},{"./raw":93}],93:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -10479,7 +10479,7 @@ rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
 // https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],94:[function (require,module,exports){
+},{}],94:[function(require,module,exports){
 'use strict';
 
 var asap = require('asap/raw');
@@ -10551,7 +10551,7 @@ Promise._10 = null;
 Promise._97 = null;
 Promise._61 = noop;
 
-Promise.prototype.then = function (onFulfilled, onRejected) {
+Promise.prototype.then = function(onFulfilled, onRejected) {
   if (this.constructor !== Promise) {
     return safeThen(this, onFulfilled, onRejected);
   }
@@ -10592,7 +10592,7 @@ function handle(self, deferred) {
 }
 
 function handleResolved(self, deferred) {
-  asap(function () {
+  asap(function() {
     var cb = self._81 === 1 ? deferred.onFulfilled : deferred.onRejected;
     if (cb === null) {
       if (self._81 === 1) {
@@ -10694,7 +10694,7 @@ function doResolve(fn, promise) {
   }
 }
 
-},{"asap/raw":93}],95:[function (require,module,exports){
+},{"asap/raw":93}],95:[function(require,module,exports){
 'use strict';
 
 //This file contains the ES6 extensions to the core Promises/A+ API
@@ -10791,7 +10791,7 @@ Promise.reject = function (value) {
 
 Promise.race = function (values) {
   return new Promise(function (resolve, reject) {
-    values.forEach(function (value){
+    values.forEach(function(value){
       Promise.resolve(value).then(resolve, reject);
     });
   });
@@ -10803,7 +10803,7 @@ Promise.prototype['catch'] = function (onRejected) {
   return this.then(null, onRejected);
 };
 
-},{"./core.js":94}],96:[function (require,module,exports){
+},{"./core.js":94}],96:[function(require,module,exports){
 // should work in any browser without browserify
 
 if (typeof Promise.prototype.done !== 'function') {
@@ -10816,7 +10816,7 @@ if (typeof Promise.prototype.done !== 'function') {
     })
   }
 }
-},{}],97:[function (require,module,exports){
+},{}],97:[function(require,module,exports){
 // not "use strict" so we can declare global "Promise"
 
 var asap = require('asap');

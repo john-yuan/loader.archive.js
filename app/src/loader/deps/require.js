@@ -40,7 +40,7 @@ var requirejs, require, define;
         return singlePrefix || '';
     }
 
-    function isfunction (it) {
+    function isFunction(it) {
         return ostring.call(it) === '[object Function]';
     }
 
@@ -111,7 +111,7 @@ var requirejs, require, define;
             eachProp(source, function (value, prop) {
                 if (force || !hasProp(target, prop)) {
                     if (deepStringMixin && typeof value === 'object' && value &&
-                        !isArray(value) && !isfunction (value) &&
+                        !isArray(value) && !isFunction(value) &&
                         !(value instanceof RegExp)) {
 
                         if (!target[prop]) {
@@ -181,7 +181,7 @@ var requirejs, require, define;
     }
 
     if (typeof requirejs !== 'undefined') {
-        if (isfunction (requirejs)) {
+        if (isFunction(requirejs)) {
             //Do not overwrite an existing requirejs instance.
             return;
         }
@@ -190,7 +190,7 @@ var requirejs, require, define;
     }
 
     //Allow for a require config object
-    if (typeof require !== 'undefined' && !isfunction (require)) {
+    if (typeof require !== 'undefined' && !isFunction(require)) {
         //assume it is a config object.
         cfg = require;
         require = undefined;
@@ -558,7 +558,7 @@ var requirejs, require, define;
         function takeGlobalQueue() {
             //Push all the globalDefQueue items into the context's defQueue
             if (globalDefQueue.length) {
-                each(globalDefQueue, function (queueItem) {
+                each(globalDefQueue, function(queueItem) {
                     var id = queueItem[0];
                     if (typeof id === 'string') {
                         context.defQueueMap[id] = true;
@@ -865,7 +865,7 @@ var requirejs, require, define;
                     this.defining = true;
 
                     if (this.depCount < 1 && !this.defined) {
-                        if (isfunction (factory)) {
+                        if (isFunction(factory)) {
                             //If there is an error listener, favor passing
                             //to that instead of throwing an error. However,
                             //only do it for define()'d  modules. require
@@ -1145,7 +1145,7 @@ var requirejs, require, define;
                             // No direct errback on this module, but something
                             // else is listening for errors, so be sure to
                             // propagate the error correctly.
-                            on(depMap, 'error', bind(this, function (err) {
+                            on(depMap, 'error', bind(this, function(err) {
                                 this.emit('error', err);
                             }));
                         }
@@ -1290,7 +1290,7 @@ var requirejs, require, define;
                 // Convert old style urlArgs string to a function.
                 if (typeof cfg.urlArgs === 'string') {
                     var urlArgs = cfg.urlArgs;
-                    cfg.urlArgs = function (id, url) {
+                    cfg.urlArgs = function(id, url) {
                         return (url.indexOf('?') === -1 ? '?' : '&') + urlArgs;
                     };
                 }
@@ -1405,12 +1405,12 @@ var requirejs, require, define;
                 function localRequire(deps, callback, errback) {
                     var id, map, requireMod;
 
-                    if (options.enableBuildCallback && callback && isfunction (callback)) {
+                    if (options.enableBuildCallback && callback && isFunction(callback)) {
                         callback.__requireJsBuild = true;
                     }
 
                     if (typeof deps === 'string') {
-                        if (isfunction (callback)) {
+                        if (isFunction(callback)) {
                             //Invalid call
                             return onError(makeError('requireargs', 'Invalid require call'), errback);
                         }
@@ -1522,7 +1522,7 @@ var requirejs, require, define;
                         //Clean queued defines too. Go backwards
                         //in array so that the splices do not
                         //mess up the iteration.
-                        eachReverse(defQueue, function (args, i) {
+                        eachReverse(defQueue, function(args, i) {
                             if (args[0] === id) {
                                 defQueue.splice(i, 1);
                             }
@@ -1725,9 +1725,9 @@ var requirejs, require, define;
                 var data = getScriptData(evt);
                 if (!hasPathFallback(data.id)) {
                     var parents = [];
-                    eachProp(registry, function (value, key) {
+                    eachProp(registry, function(value, key) {
                         if (key.indexOf('_@r') !== 0) {
-                            each(value.depMaps, function (depMap) {
+                            each(value.depMaps, function(depMap) {
                                 if (depMap.id === data.id) {
                                     parents.push(key);
                                     return true;
@@ -1975,7 +1975,7 @@ var requirejs, require, define;
                 // Post a task to the event loop to work around a bug in WebKit
                 // where the worker gets garbage-collected after calling
                 // importScripts(): https://webkit.org/b/153317
-                setTimeout(function () {}, 0);
+                setTimeout(function() {}, 0);
                 importScripts(url);
 
                 //Account for anonymous modules
@@ -2077,7 +2077,7 @@ var requirejs, require, define;
 
         //If no name, and callback is a function, then figure out if it a
         //CommonJS thing with dependencies.
-        if (!deps && isfunction (callback)) {
+        if (!deps && isFunction(callback)) {
             deps = [];
             //Remove comments from the callback string,
             //look for require calls, and pull them into the dependencies,
