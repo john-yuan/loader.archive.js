@@ -37,7 +37,7 @@ const renderTable = function (layout, data) {
             let text = item[name];
             rowText.push(addSpaces(text, maxLength[name] || 0, info.alignRight));
         });
-        tableText.push(rowText.join(' | ').trim());
+        tableText.push(rowText.join(' | ').replace(/\s+$/, ''));
     });
     return tableText.join('\n');
 };
