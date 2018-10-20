@@ -1,0 +1,10 @@
+html {
+    font-family: sans-serif;
+}
+body {
+    font-size: 1rem;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+}

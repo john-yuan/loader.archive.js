@@ -1,0 +1,10 @@
+<%
+    var route = data.moduleId.split('/');
+
+    route.shift();
+    route.pop();
+
+    route = route.join('/');
+%><div>
+    <%= route %>
+</div>

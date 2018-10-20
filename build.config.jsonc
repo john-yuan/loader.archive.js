@@ -1,0 +1,38 @@
+{
+    // 输入目录(源代码, 相对于本文件所在目录)
+    "in": "./app",
+    // 输出目录
+    "out": "./dist",
+    // 入口文件
+    "entry": "index.html",
+    // 打包前需要移除的文件(夹), 相对于 in 目录
+    "deleteFiles": [],
+    // 构建工具默认处理入口文件和根目录下的 HTML 文件，其他位置的文件需手动指定
+    "htmlFiles": [],
+    // autoprefixer 浏览器前缀
+    "autoprefixerBrowsers": ["iOS >= 7", "Android >= 4"],
+    // 线上环境图片 url 前缀
+    "prodSrcPrefix": "./",
+    // uglifyJS3 配置
+    "uglifyOptions": {},
+    // 文件 hash 长度(默认 7)
+    "hashSize": 7,
+    // 是否使用内联 <script> 标签注入关闭调试模式的 DEBUG=false 变量
+    "injectDebugOffWithInlineScript": false,
+    // 保存构建编号至指定文件(相对输出目录), 留空表示不保存
+    "saveSerialNo": "logs/serialNo.txt",
+    // 保存构建信息至指定文件(相对输出目录), 留空表示不保存
+    "saveBuildInfo": "logs/buildInfo.txt",
+    // 保存构建日志至指定文件(相对输出目录), 留空表示不保存
+    "saveBuildLog": "logs/buildLog.txt",
+    // 保存构建结果至指定文件(相对输出目录), 留空表示不保存
+    "saveBuildResult": "logs/buildResult.txt",
+    // 自动转换为 DataUri 的图片大小限制
+    "imageDataUriSize": 0,
+    // 自动引入 Loader 的独立模块的大小限制
+    "autoIncludeModuleSize": 5120,
+    // 强制引入 Loader 的模块
+    "includeInLoader": [],
+    // 强制排除在 Loader 外的模块
+    "excludeInLoader": []
+}

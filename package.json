@@ -1,0 +1,44 @@
+{
+  "name": "loader.js",
+  "version": "2.0.0",
+  "description": "The dev-tools for loader.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./dev-tools/server/server.js",
+    "build": "node ./dev-tools/builder/build.js",
+    "v": "node ./dev-tools/creator/view/view.js",
+    "w": "node ./dev-tools/creator/widget/widget.js",
+    "m": "node ./dev-tools/creator/module/module.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/john-yuan/loader.js.git"
+  },
+  "keywords": [
+    "loader.js"
+  ],
+  "author": "JOHN YUAN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/john-yuan/loader.js/issues"
+  },
+  "homepage": "https://github.com/john-yuan/loader.js#readme",
+  "dependencies": {
+    "autoprefixer": "^8.0.0",
+    "clean-css": "^4.1.9",
+    "colors": "^1.1.2",
+    "ejs": "2.5.7",
+    "express": "4.16.2",
+    "filesize": "^3.6.0",
+    "fs-extra": "^5.0.0",
+    "html-minifier": "^3.5.9",
+    "http-proxy": "^1.17.0",
+    "jsdom": "^11.6.2",
+    "less": "2.7.2",
+    "mime": "1.4.1",
+    "postcss": "^6.0.19",
+    "uglify-js": "^3.3.12",
+    "uuid": "^3.2.1"
+  }
+}

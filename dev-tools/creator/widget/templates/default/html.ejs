@@ -1,0 +1,12 @@
+<%
+    var moduleId = data.moduleId.split('/');
+
+    moduleId.shift();
+    moduleId.pop();
+    moduleId.unshift('w');
+
+    moduleId = moduleId.join('-');
+_%>
+<div class="<%= moduleId %>">
+
+</div>

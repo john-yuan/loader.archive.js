@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Loader.js</title>
+    <link rel="stylesheet" href="src/assets/styles/application.css">
+</head>
+<body>
+    <div id="views"></div>
+    <div id="widgets"></div>
+    <script src="src/assets/scripts/prod.env.js"></script>
+    <script @remove src="src/assets/scripts/debug.env.js"></script>
+    <script @config src="src/assets/scripts/require.config.js"></script>
+    <script data-main="loader/loader" src="src/loader/deps/require.js"></script>
+</body>
+</html>
