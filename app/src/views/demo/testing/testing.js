@@ -1,6 +1,6 @@
 /**
- * @module views/demo/home/home
- * @version 2018-07-17 1.0.0
+ * @module views/demo/testing/testing
+ * @version 2018-10-24 1.0.0
  */
 define(function (require, exports, module) {
     var $ = require('libs/zepto');
@@ -11,8 +11,8 @@ define(function (require, exports, module) {
      * 绑定事件
      */
     var bindEvents = function () {
-        $mRootNode.on('click', '.btn-render-another-page', function () {
-            loader.router.routeTo('demo/testing');
+        $mRootNode.on('click', '.btn-goback-to-homepage', function () {
+            loader.router.routeTo('demo/home');
         });
     };
 
@@ -22,8 +22,8 @@ define(function (require, exports, module) {
      * @param {RenderEvent} event
      */
     exports.render = function (event) {
-        var cssText = require('loader/plugin/text!./home.less');
-        var htmlText = require('loader/plugin/text!./home.tpl');
+        var cssText = require('loader/plugin/text!./testing.less');
+        var htmlText = require('loader/plugin/text!./testing.tpl');
 
         // 渲染视图并保存视图根节点
         $mRootNode = $(loader.view.render(module, cssText, htmlText));
@@ -33,7 +33,7 @@ define(function (require, exports, module) {
         bindEvents();
 
         // TODO: 其它操作
-        console.log(mRenderEvent);
+
     };
 
     /**
