@@ -27,7 +27,7 @@
     "express": "4.16.2",
     "mime": "1.4.1",
     "autoprefixer": "^8.0.0",
-    "clean-css": "^4.1.9",
+    "clean-css": "^4.1.11",
     "colors": "^1.1.2",
     "filesize": "^3.6.0",
     "fs-extra": "^5.0.0",
