@@ -1,8 +1,8 @@
 {
-  "name": "rs",
+  "name": "loader.js",
   "version": "1.0.0",
   "description": "The dev-tools for rs.",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dev-tools/server/server.js",
